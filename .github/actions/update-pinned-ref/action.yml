@@ -1,0 +1,74 @@
+name: Update Pinned Ref
+
+description: Updates README.md to use the latest pinned commit SHA for the action
+
+author: nicholas-fedor
+
+inputs:
+  repo-owner:
+    description: Repository owner
+    required: true
+  repo-name:
+    description: Repository name
+    required: true
+  sha:
+    description: Specific commit SHA to use (optional, will fetch latest if not provided)
+    required: false
+  readme-path:
+    description: Path to README.md
+    required: true
+    default: README.md
+  token:
+    description: GitHub token for git and PR operations
+    required: false
+    default: ${{ github.token }}
+
+runs:
+  using: composite
+  steps:
+    - name: Make scripts executable
+      shell: bash
+      run: chmod +x "${{ github.action_path }}/update-ref.sh"
+
+    - name: Get SHA and update README
+      id: update-readme
+      shell: bash
+      env:
+        INPUTS_REPO_OWNER: ${{ inputs.repo-owner }}
+        INPUTS_REPO_NAME: ${{ inputs.repo-name }}
+        INPUTS_SHA: ${{ inputs.sha }}
+        INPUTS_README_PATH: ${{ inputs.readme-path }}
+        GITHUB_TOKEN: ${{ inputs.token }}
+      run: |
+        "${{ github.action_path }}/update-ref.sh" \
+          "${INPUTS_REPO_OWNER}" \
+          "${INPUTS_REPO_NAME}" \
+          "${INPUTS_SHA}" \
+          "${INPUTS_README_PATH}"
+
+    - name: Create or update pull request
+      id: cpr
+      uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1
+      with:
+        token: ${{ inputs.token }}
+        commit-message: "docs(readme): update pinned action ref"
+        title: "docs: update pinned action ref in README"
+        body: |
+          ## Summary
+          - Update ${{ inputs.readme-path }} with latest pinned action ref
+        branch: docs/update-pinned-ref
+        author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+        committer: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+        sign-commits: true
+
+    - name: Enable auto-merge
+      if: steps.cpr.outputs.pull-request-operation != ''
+      uses: peter-evans/enable-pull-request-automerge@a660677d5469627102a1c1e11409dd063606628d
+      with:
+        token: ${{ inputs.token }}
+        pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+        merge-method: squash
+
+branding:
+  icon: refresh-cw
+  color: blue

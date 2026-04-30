@@ -1,0 +1,24 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:best-practices",
+    ":enableVulnerabilityAlerts"
+  ],
+  "automerge": true,
+  "packageRules": [
+    {
+      "description": "Automerge non-major + security updates (minor/patch/digest/security)",
+      "matchUpdateTypes": ["minor", "patch", "digest", "security"],
+      "automerge": true
+    },
+    {
+      "description": "Group all GitHub Actions updates into a single PR",
+      "matchManagers": ["github-actions"],
+      "groupName": "GitHub Actions",
+      "groupSlug": "github-actions"
+    }
+  ],
+  "lockFileMaintenance": {
+    "automerge": true
+  }
+}

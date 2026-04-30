@@ -1,0 +1,51 @@
+---
+name: Update Pinned Ref
+on:
+  workflow_dispatch:
+    inputs:
+      repo-owner:
+        description: Repository owner
+        required: true
+        default: nicholas-fedor
+      repo-name:
+        description: Repository name
+        required: true
+        default: actionlint-action
+      sha:
+        description: Specific commit SHA to use (optional, will fetch latest if not provided)
+        required: false
+      readme-path:
+        description: Path to README.md
+        required: false
+        default: README.md
+  repository_dispatch:
+    types: [release]
+
+permissions: read-all
+
+jobs:
+  update-ref:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Harden the Runner (Step Security)
+        uses: step-security/harden-runner@8d3c67de8e2fe68ef647c8db1e6a09f647780f40 # v2.19.0
+        with:
+          egress-policy: audit
+
+      - name: Checkout Repo
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Update Pinned ref in README
+        uses: ./.github/actions/update-pinned-ref
+        with:
+          repo-owner: ${{ github.event.inputs.repo-owner || github.event.client_payload.repo-owner || 'nicholas-fedor' }}
+          repo-name: ${{ github.event.inputs.repo-name || github.event.client_payload.repo-name || 'actionlint-action' }}
+          sha: ${{ github.event.inputs.sha || github.event.client_payload.sha }}
+          readme-path: ${{ github.event.inputs.readme-path || github.event.client_payload.readme-path || 'README.md' }}
+          token: ${{ secrets.GITHUB_TOKEN }}
