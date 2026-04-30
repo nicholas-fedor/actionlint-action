@@ -1,0 +1,79 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@7.2.1
+
+executors:
+  default:
+    docker:
+      - image: cimg/node:lts
+    working_directory: ~/project
+
+commands:
+  setup-and-install:
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: npm
+          cache-path: node_modules
+          override-ci-command: npm ci
+
+  verify-dependencies:
+    steps:
+      - run:
+          name: Verify Dependency Signatures
+          command: npm audit signatures
+
+  build-dist:
+    steps:
+      - run:
+          name: Build Distribution Bundle
+          command: npm run build
+
+jobs:
+  test:
+    executor: default
+    steps:
+      - setup-and-install
+      - verify-dependencies
+      - run:
+          name: Run Tests with Coverage
+          command: npx jest --coverage
+      - run:
+          name: Upload Coverage to Codecov
+          command: |
+            if [ -n "$CODECOV_TOKEN" ]; then
+              curl -Os https://uploader.codecov.io/latest/linux/codecov
+              chmod +x codecov
+              ./codecov -t "$CODECOV_TOKEN" --dir ~/project/coverage
+            else
+              echo "CODECOV_TOKEN not set, skipping upload"
+            fi
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - coverage
+
+  test-pr:
+    executor: default
+    steps:
+      - setup-and-install
+      - verify-dependencies
+      - run:
+          name: Run Tests
+          command: npx jest
+      - build-dist
+
+workflows:
+  ci:
+    jobs:
+      - test:
+          filters:
+            branches:
+              only: main
+            tags:
+              only: /.*/
+      - test-pr:
+          filters:
+            branches:
+              ignore: main
