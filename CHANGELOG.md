@@ -10,11 +10,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Chores
 
+- Update dependency @types/node to v24 by @renovate[bot] in [#2](https://github.com/nicholas-fedor/actionlint-action/pull/2)
 - Pin dependencies by @renovate[bot] in [#1](https://github.com/nicholas-fedor/actionlint-action/pull/1)
 
 ### New Contributors
 
-- @renovate[bot] made their first contribution in [#1](https://github.com/nicholas-fedor/actionlint-action/pull/1)
+- @renovate[bot] made their first contribution in [#2](https://github.com/nicholas-fedor/actionlint-action/pull/2)
+- @github-actions[bot] made their first contribution in [#4](https://github.com/nicholas-fedor/actionlint-action/pull/4)
 
 ## [1.0.0] - 2026-04-30
 
