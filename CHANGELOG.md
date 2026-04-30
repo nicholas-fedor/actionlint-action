@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Add CircleCI configuration for project by @nicholas-fedor in [#8](https://github.com/nicholas-fedor/actionlint-action/pull/8)
 - Add Codecov coverage reporting to test workflow by @nicholas-fedor in [#5](https://github.com/nicholas-fedor/actionlint-action/pull/5)
 
 ### Chores
@@ -19,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### New Contributors
 
-- @github-actions[bot] made their first contribution in [#6](https://github.com/nicholas-fedor/actionlint-action/pull/6)
+- @github-actions[bot] made their first contribution in [#7](https://github.com/nicholas-fedor/actionlint-action/pull/7)
 - @renovate[bot] made their first contribution in [#2](https://github.com/nicholas-fedor/actionlint-action/pull/2)
 
 ## [1.0.0] - 2026-04-30
