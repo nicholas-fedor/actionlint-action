@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add Codecov coverage reporting to test workflow by @nicholas-fedor in [#5](https://github.com/nicholas-fedor/actionlint-action/pull/5)
+
 ### Chores
 
 - Update dependency @types/node to v24 by @renovate[bot] in [#2](https://github.com/nicholas-fedor/actionlint-action/pull/2)
@@ -15,8 +19,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### New Contributors
 
+- @github-actions[bot] made their first contribution in [#6](https://github.com/nicholas-fedor/actionlint-action/pull/6)
 - @renovate[bot] made their first contribution in [#2](https://github.com/nicholas-fedor/actionlint-action/pull/2)
-- @github-actions[bot] made their first contribution in [#4](https://github.com/nicholas-fedor/actionlint-action/pull/4)
 
 ## [1.0.0] - 2026-04-30
 
