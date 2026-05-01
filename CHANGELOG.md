@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Chores
 
+- Update dependency @actions/core to v3 by @renovate[bot] in [#23](https://github.com/nicholas-fedor/actionlint-action/pull/23)
 - Update dependency undici to v8 by @renovate[bot] in [#20](https://github.com/nicholas-fedor/actionlint-action/pull/20)
 - Update github/codeql-action action to v4.35.3 by @renovate[bot] in [#19](https://github.com/nicholas-fedor/actionlint-action/pull/19)
 - Exclude test files from TypeScript compilation by @nicholas-fedor in [#14](https://github.com/nicholas-fedor/actionlint-action/pull/14)
@@ -34,8 +35,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### New Contributors
 
-- @renovate[bot] made their first contribution in [#20](https://github.com/nicholas-fedor/actionlint-action/pull/20)
-- @github-actions[bot] made their first contribution in [#18](https://github.com/nicholas-fedor/actionlint-action/pull/18)
+- @renovate[bot] made their first contribution in [#23](https://github.com/nicholas-fedor/actionlint-action/pull/23)
+- @github-actions[bot] made their first contribution in [#21](https://github.com/nicholas-fedor/actionlint-action/pull/21)
 
 ## [1.0.0] - 2026-04-30
 
