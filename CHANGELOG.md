@@ -20,6 +20,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Chores
 
+- Update dependency @actions/github to v9 by @renovate[bot] in [#26](https://github.com/nicholas-fedor/actionlint-action/pull/26)
+- Update semantic-release monorepo by @renovate[bot] in [#22](https://github.com/nicholas-fedor/actionlint-action/pull/22)
 - Update dependency @actions/exec to v3 by @renovate[bot] in [#25](https://github.com/nicholas-fedor/actionlint-action/pull/25)
 - Update dependency @actions/core to v3 by @renovate[bot] in [#23](https://github.com/nicholas-fedor/actionlint-action/pull/23)
 - Update dependency undici to v8 by @renovate[bot] in [#20](https://github.com/nicholas-fedor/actionlint-action/pull/20)
@@ -36,8 +38,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### New Contributors
 
-- @renovate[bot] made their first contribution in [#25](https://github.com/nicholas-fedor/actionlint-action/pull/25)
-- @github-actions[bot] made their first contribution in [#24](https://github.com/nicholas-fedor/actionlint-action/pull/24)
+- @renovate[bot] made their first contribution in [#26](https://github.com/nicholas-fedor/actionlint-action/pull/26)
+- @github-actions[bot] made their first contribution in [#27](https://github.com/nicholas-fedor/actionlint-action/pull/27)
 
 ## [1.0.0] - 2026-04-30
 
