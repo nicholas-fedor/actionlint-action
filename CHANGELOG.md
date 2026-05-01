@@ -10,18 +10,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Add pinned ref validation and refine auto-merge logic by @nicholas-fedor in [#10](https://github.com/nicholas-fedor/actionlint-action/pull/10)
 - Add CircleCI configuration for project by @nicholas-fedor in [#8](https://github.com/nicholas-fedor/actionlint-action/pull/8)
 - Add Codecov coverage reporting to test workflow by @nicholas-fedor in [#5](https://github.com/nicholas-fedor/actionlint-action/pull/5)
 
 ### Chores
 
+- Pin node.js to 0a67b6f by @renovate[bot] in [#11](https://github.com/nicholas-fedor/actionlint-action/pull/11)
+- Update dependency typescript to v6 by @renovate[bot] in [#12](https://github.com/nicholas-fedor/actionlint-action/pull/12)
 - Update dependency @types/node to v24 by @renovate[bot] in [#2](https://github.com/nicholas-fedor/actionlint-action/pull/2)
 - Pin dependencies by @renovate[bot] in [#1](https://github.com/nicholas-fedor/actionlint-action/pull/1)
 
 ### New Contributors
 
-- @github-actions[bot] made their first contribution in [#7](https://github.com/nicholas-fedor/actionlint-action/pull/7)
-- @renovate[bot] made their first contribution in [#2](https://github.com/nicholas-fedor/actionlint-action/pull/2)
+- @renovate[bot] made their first contribution in [#11](https://github.com/nicholas-fedor/actionlint-action/pull/11)
+- @github-actions[bot] made their first contribution in [#9](https://github.com/nicholas-fedor/actionlint-action/pull/9)
 
 ## [1.0.0] - 2026-04-30
 
