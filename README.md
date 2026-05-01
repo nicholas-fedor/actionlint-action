@@ -18,14 +18,14 @@ Lint your GitHub Actions workflow files using the official [actionlint](https://
 
 ```yaml
 - name: Run actionlint
-  uses: nicholas-fedor/actionlint-action@v1
+  uses: nicholas-fedor/actionlint-action@78fd91fa48051abcbeac14c695a0921b0a71e9a1
 ```
 
 Pin a specific version with Renovate/Dependabot support:
 
 ```yaml
 - name: Run actionlint
-  uses: nicholas-fedor/actionlint-action@v1
+  uses: nicholas-fedor/actionlint-action@78fd91fa48051abcbeac14c695a0921b0a71e9a1
   with:
     version: "1.7.12"  # renovate: datasource=github-releases depName=rhysd/actionlint
 ```
@@ -36,7 +36,7 @@ Pin a specific version with Renovate/Dependabot support:
 
 ```yaml
 - name: Run actionlint
-  uses: nicholas-fedor/actionlint-action@v1
+  uses: nicholas-fedor/actionlint-action@78fd91fa48051abcbeac14c695a0921b0a71e9a1
   with:
     ignore: |
       'shellcheck reported issue in this script: SC2086:.+'
@@ -47,7 +47,7 @@ Pin a specific version with Renovate/Dependabot support:
 
 ```yaml
 - name: Lint specific workflows
-  uses: nicholas-fedor/actionlint-action@v1
+  uses: nicholas-fedor/actionlint-action@78fd91fa48051abcbeac14c695a0921b0a71e9a1
   with:
     files: ".github/workflows/ci.yml .github/workflows/release.yml"
 ```
@@ -56,7 +56,7 @@ Pin a specific version with Renovate/Dependabot support:
 
 ```yaml
 - name: Run actionlint
-  uses: nicholas-fedor/actionlint-action@v1
+  uses: nicholas-fedor/actionlint-action@78fd91fa48051abcbeac14c695a0921b0a71e9a1
   with:
     config-file: ".config/actionlint.yaml"
     pyflakes: ""
@@ -67,7 +67,7 @@ Pin a specific version with Renovate/Dependabot support:
 
 ```yaml
 - name: Lint generated workflow
-  uses: nicholas-fedor/actionlint-action@v1
+  uses: nicholas-fedor/actionlint-action@78fd91fa48051abcbeac14c695a0921b0a71e9a1
   with:
     files: "-"
     stdin-filename: "generated.yml"
