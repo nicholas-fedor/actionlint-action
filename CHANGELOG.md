@@ -14,8 +14,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add CircleCI configuration for project by @nicholas-fedor in [#8](https://github.com/nicholas-fedor/actionlint-action/pull/8)
 - Add Codecov coverage reporting to test workflow by @nicholas-fedor in [#5](https://github.com/nicholas-fedor/actionlint-action/pull/5)
 
+### Changed
+
+- Update pinned action ref by @github-actions[bot] in [#18](https://github.com/nicholas-fedor/actionlint-action/pull/18)
+
 ### Chores
 
+- Update dependency undici to v8 by @renovate[bot] in [#20](https://github.com/nicholas-fedor/actionlint-action/pull/20)
+- Update github/codeql-action action to v4.35.3 by @renovate[bot] in [#19](https://github.com/nicholas-fedor/actionlint-action/pull/19)
 - Exclude test files from TypeScript compilation by @nicholas-fedor in [#14](https://github.com/nicholas-fedor/actionlint-action/pull/14)
 - Pin node.js to 0a67b6f by @renovate[bot] in [#11](https://github.com/nicholas-fedor/actionlint-action/pull/11)
 - Update dependency typescript to v6 by @renovate[bot] in [#12](https://github.com/nicholas-fedor/actionlint-action/pull/12)
@@ -28,8 +34,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### New Contributors
 
-- @github-actions[bot] made their first contribution in [#15](https://github.com/nicholas-fedor/actionlint-action/pull/15)
-- @renovate[bot] made their first contribution in [#11](https://github.com/nicholas-fedor/actionlint-action/pull/11)
+- @renovate[bot] made their first contribution in [#20](https://github.com/nicholas-fedor/actionlint-action/pull/20)
+- @github-actions[bot] made their first contribution in [#18](https://github.com/nicholas-fedor/actionlint-action/pull/18)
 
 ## [1.0.0] - 2026-04-30
 
