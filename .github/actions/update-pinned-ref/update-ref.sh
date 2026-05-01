@@ -127,8 +127,18 @@ update_readme() {
     local sha="$3"
     local readme_path="$4"
 
-    sed -i "s|$repo_owner/$repo_name@[a-f0-9]\{7,\}|$repo_owner/$repo_name@$sha|g" "$readme_path"
-    echo "Updated $readme_path to use $sha"
+    local escape_regex_repo_owner
+    escape_regex_repo_owner=$(printf '%s' "$repo_owner" | sed 's/[.[\*^$]/\\&/g')
+    local escape_regex_repo_name
+    escape_regex_repo_name=$(printf '%s' "$repo_name" | sed 's/[.[\*^$]/\\&/g')
+
+    if grep -q "$escape_regex_repo_owner/$escape_regex_repo_name@[a-zA-Z0-9._-]\+" "$readme_path"; then
+        sed -i "s|$escape_regex_repo_owner/$escape_regex_repo_name@[a-zA-Z0-9._-]\+|$repo_owner/$repo_name@$sha|g" "$readme_path"
+        echo "Updated $readme_path to use $sha"
+    else
+        echo "Warning: No pinned ref found in $readme_path for $repo_owner/$repo_name" >&2
+        return 1
+    fi
 }
 
 # Main entry point
