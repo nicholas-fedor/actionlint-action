@@ -22,9 +22,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update dependency @types/node to v24 by @renovate[bot] in [#2](https://github.com/nicholas-fedor/actionlint-action/pull/2)
 - Pin dependencies by @renovate[bot] in [#1](https://github.com/nicholas-fedor/actionlint-action/pull/1)
 
+### Tests
+
+- Configure ts-jest with proper type definitions by @nicholas-fedor in [#16](https://github.com/nicholas-fedor/actionlint-action/pull/16)
+
 ### New Contributors
 
-- @github-actions[bot] made their first contribution in [#13](https://github.com/nicholas-fedor/actionlint-action/pull/13)
+- @github-actions[bot] made their first contribution in [#15](https://github.com/nicholas-fedor/actionlint-action/pull/15)
 - @renovate[bot] made their first contribution in [#11](https://github.com/nicholas-fedor/actionlint-action/pull/11)
 
 ## [1.0.0] - 2026-04-30
