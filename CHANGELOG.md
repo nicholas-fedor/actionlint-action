@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Chores
 
+- Exclude test files from TypeScript compilation by @nicholas-fedor in [#14](https://github.com/nicholas-fedor/actionlint-action/pull/14)
 - Pin node.js to 0a67b6f by @renovate[bot] in [#11](https://github.com/nicholas-fedor/actionlint-action/pull/11)
 - Update dependency typescript to v6 by @renovate[bot] in [#12](https://github.com/nicholas-fedor/actionlint-action/pull/12)
 - Update dependency @types/node to v24 by @renovate[bot] in [#2](https://github.com/nicholas-fedor/actionlint-action/pull/2)
@@ -23,8 +24,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### New Contributors
 
+- @github-actions[bot] made their first contribution in [#13](https://github.com/nicholas-fedor/actionlint-action/pull/13)
 - @renovate[bot] made their first contribution in [#11](https://github.com/nicholas-fedor/actionlint-action/pull/11)
-- @github-actions[bot] made their first contribution in [#9](https://github.com/nicholas-fedor/actionlint-action/pull/9)
 
 ## [1.0.0] - 2026-04-30
 
