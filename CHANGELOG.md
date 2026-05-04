@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Chores
 
+- Lock file maintenance by @renovate[bot] in [#33](https://github.com/nicholas-fedor/actionlint-action/pull/33)
 - Update step-security/harden-runner action to v2.19.1 by @renovate[bot] in [#31](https://github.com/nicholas-fedor/actionlint-action/pull/31)
 - Update dependency @actions/tool-cache to v4 by @renovate[bot] in [#29](https://github.com/nicholas-fedor/actionlint-action/pull/29)
 - Update dependency @actions/github to v9 by @renovate[bot] in [#26](https://github.com/nicholas-fedor/actionlint-action/pull/26)
@@ -40,8 +41,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### New Contributors
 
-- @renovate[bot] made their first contribution in [#31](https://github.com/nicholas-fedor/actionlint-action/pull/31)
-- @github-actions[bot] made their first contribution in [#30](https://github.com/nicholas-fedor/actionlint-action/pull/30)
+- @renovate[bot] made their first contribution in [#33](https://github.com/nicholas-fedor/actionlint-action/pull/33)
+- @github-actions[bot] made their first contribution in [#32](https://github.com/nicholas-fedor/actionlint-action/pull/32)
 
 ## [1.0.0] - 2026-04-30
 
