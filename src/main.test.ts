@@ -282,7 +282,8 @@ describe('getLatestVersion', () => {
         globalThis.fetch = (async (url: string) => ({
             ok: true,
             json: async () => {
-                if (url.includes('api.github.com')) {
+                const parsed = new URL(url);
+                if (parsed.hostname === 'api.github.com') {
                     return { tag_name: 'v1.7.12' };
                 }
                 return {};
