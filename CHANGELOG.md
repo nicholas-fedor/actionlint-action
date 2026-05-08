@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Chores
 
+- Update dependency jest to v30.4.1 by @renovate[bot] in [#39](https://github.com/nicholas-fedor/actionlint-action/pull/39)
 - Update dependency @types/node to v24.12.3 by @renovate[bot] in [#37](https://github.com/nicholas-fedor/actionlint-action/pull/37)
 - Update github/codeql-action action to v4.35.4 by @renovate[bot] in [#35](https://github.com/nicholas-fedor/actionlint-action/pull/35)
 - Lock file maintenance by @renovate[bot] in [#33](https://github.com/nicholas-fedor/actionlint-action/pull/33)
@@ -43,8 +44,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### New Contributors
 
-- @renovate[bot] made their first contribution in [#37](https://github.com/nicholas-fedor/actionlint-action/pull/37)
-- @github-actions[bot] made their first contribution in [#36](https://github.com/nicholas-fedor/actionlint-action/pull/36)
+- @renovate[bot] made their first contribution in [#39](https://github.com/nicholas-fedor/actionlint-action/pull/39)
+- @github-actions[bot] made their first contribution in [#38](https://github.com/nicholas-fedor/actionlint-action/pull/38)
 
 ## [1.0.0] - 2026-04-30
 
