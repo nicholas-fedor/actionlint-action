@@ -16,11 +16,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Use bun run instead of bunx for semantic-release by @nicholas-fedor in [#47](https://github.com/nicholas-fedor/actionlint-action/pull/47)
 - Migrate build and test tooling from Node.js/npm to Bun by @nicholas-fedor in [#41](https://github.com/nicholas-fedor/actionlint-action/pull/41)
 - Update pinned action ref by @github-actions[bot] in [#18](https://github.com/nicholas-fedor/actionlint-action/pull/18)
 
 ### Chores
 
+- Update dependency @types/node to v25 by @renovate[bot] in [#44](https://github.com/nicholas-fedor/actionlint-action/pull/44)
 - Pin dependency @types/bun to 1.3.13 by @renovate[bot] in [#43](https://github.com/nicholas-fedor/actionlint-action/pull/43)
 - Update dependency jest to v30.4.1 by @renovate[bot] in [#39](https://github.com/nicholas-fedor/actionlint-action/pull/39)
 - Update dependency @types/node to v24.12.3 by @renovate[bot] in [#37](https://github.com/nicholas-fedor/actionlint-action/pull/37)
@@ -46,8 +48,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### New Contributors
 
-- @renovate[bot] made their first contribution in [#43](https://github.com/nicholas-fedor/actionlint-action/pull/43)
-- @github-actions[bot] made their first contribution in [#42](https://github.com/nicholas-fedor/actionlint-action/pull/42)
+- @renovate[bot] made their first contribution in [#44](https://github.com/nicholas-fedor/actionlint-action/pull/44)
+- @github-actions[bot] made their first contribution in [#45](https://github.com/nicholas-fedor/actionlint-action/pull/45)
 
 ## [1.0.0] - 2026-04-30
 
