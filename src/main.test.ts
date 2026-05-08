@@ -332,17 +332,32 @@ describe('getLatestVersion', () => {
 
     it('uses github-token input when provided', async () => {
         mockInputs['github-token'] = 'my-test-token';
-        mockOctokit.rest.repos.getLatestRelease = async () => ({ data: { tag_name: 'v1.7.12' } });
-        await getLatestVersion();
-        expect(mockInputs['github-token']).toBe('my-test-token');
+        let capturedOwner = '';
+        let capturedRepo = '';
+        mockOctokit.rest.repos.getLatestRelease = async (params: any) => {
+            capturedOwner = params.owner;
+            capturedRepo = params.repo;
+            return { data: { tag_name: 'v1.7.12' } };
+        };
+        await expect(getLatestVersion()).resolves.toBe('1.7.12');
+        expect(capturedOwner).toBe('rhysd');
+        expect(capturedRepo).toBe('actionlint');
         mockInputs['github-token'] = '';
     });
 
     it('uses GITHUB_TOKEN env var when input not provided', async () => {
         mockInputs['github-token'] = '';
         process.env.GITHUB_TOKEN = 'env-token';
-        mockOctokit.rest.repos.getLatestRelease = async () => ({ data: { tag_name: 'v1.7.12' } });
-        await getLatestVersion();
+        let capturedOwner = '';
+        let capturedRepo = '';
+        mockOctokit.rest.repos.getLatestRelease = async (params: any) => {
+            capturedOwner = params.owner;
+            capturedRepo = params.repo;
+            return { data: { tag_name: 'v2.0.0' } };
+        };
+        await expect(getLatestVersion()).resolves.toBe('2.0.0');
+        expect(capturedOwner).toBe('rhysd');
+        expect(capturedRepo).toBe('actionlint');
         delete process.env.GITHUB_TOKEN;
     });
 
