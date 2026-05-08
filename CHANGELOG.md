@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Migrate build and test tooling from Node.js/npm to Bun by @nicholas-fedor in [#41](https://github.com/nicholas-fedor/actionlint-action/pull/41)
 - Update pinned action ref by @github-actions[bot] in [#18](https://github.com/nicholas-fedor/actionlint-action/pull/18)
 
 ### Chores
@@ -44,8 +45,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### New Contributors
 
+- @github-actions[bot] made their first contribution in [#40](https://github.com/nicholas-fedor/actionlint-action/pull/40)
 - @renovate[bot] made their first contribution in [#39](https://github.com/nicholas-fedor/actionlint-action/pull/39)
-- @github-actions[bot] made their first contribution in [#38](https://github.com/nicholas-fedor/actionlint-action/pull/38)
 
 ## [1.0.0] - 2026-04-30
 
