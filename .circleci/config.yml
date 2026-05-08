@@ -58,10 +58,7 @@ jobs:
             else
               echo "CODECOV_TOKEN not set, skipping upload"
             fi
-      - persist_to_workspace:
-          root: ~/project
-          paths:
-            - coverage
+
 
   test-pr:
     executor: default
