@@ -8,7 +8,7 @@ lcov-report/
 
 # IDE
 .vscode/
-.videa/
+.idea/
 
 # Explicitly allow required files for this GitHub Action
 # (protects against overly broad parent .gitignore rules)
