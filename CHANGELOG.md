@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Add Node.js setup and switch to bunx for semantic-release by @nicholas-fedor in [#50](https://github.com/nicholas-fedor/actionlint-action/pull/50)
 - Add pinned ref validation and refine auto-merge logic by @nicholas-fedor in [#10](https://github.com/nicholas-fedor/actionlint-action/pull/10)
 - Add CircleCI configuration for project by @nicholas-fedor in [#8](https://github.com/nicholas-fedor/actionlint-action/pull/8)
 - Add Codecov coverage reporting to test workflow by @nicholas-fedor in [#5](https://github.com/nicholas-fedor/actionlint-action/pull/5)
@@ -52,7 +53,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### New Contributors
 
-- @github-actions[bot] made their first contribution in [#46](https://github.com/nicholas-fedor/actionlint-action/pull/46)
+- @github-actions[bot] made their first contribution in [#49](https://github.com/nicholas-fedor/actionlint-action/pull/49)
 - @renovate[bot] made their first contribution in [#44](https://github.com/nicholas-fedor/actionlint-action/pull/44)
 
 ## [1.0.0] - 2026-04-30
