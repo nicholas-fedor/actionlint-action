@@ -31,8 +31,8 @@ jobs:
       - name: Install Dependencies
         run: bun install
 
-      - name: Verify the Dependencies
-        run: bunx npm audit signatures
+      - name: Audit Dependencies
+        run: bun audit
 
       - name: Run Tests
         run: bun test --coverage

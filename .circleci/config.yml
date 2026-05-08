@@ -24,10 +24,10 @@ commands:
   verify-dependencies:
     steps:
       - run:
-          name: Verify Dependency Signatures
+          name: Audit Dependencies
           command: |
             export PATH="$HOME/.bun/bin:$PATH"
-            bunx npm audit signatures
+            bun audit
 
   build-dist:
     steps:
