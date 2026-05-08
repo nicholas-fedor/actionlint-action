@@ -1,9 +1,6 @@
 # Local dependencies
 node_modules/
 
-# Intermediate TypeScript output (before ncc bundling)
-lib/
-
 # Testing Artifacts
 coverage/
 lcov-report/
@@ -11,14 +8,13 @@ lcov-report/
 
 # IDE
 .vscode/
-.idea/
+.videa/
 
 # Explicitly allow required files for this GitHub Action
 # (protects against overly broad parent .gitignore rules)
 !dist/
 !action.yml
 !package.json
-!package-lock.json
-!tsconfig.json
+!bun.lock
 !README.md
 !.gitignore

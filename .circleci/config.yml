@@ -1,8 +1,5 @@
 version: 2.1
 
-orbs:
-  node: circleci/node@7.2.1
-
 executors:
   default:
     docker:
@@ -13,22 +10,33 @@ commands:
   setup-and-install:
     steps:
       - checkout
-      - node/install-packages:
-          pkg-manager: npm
-          cache-path: node_modules
-          override-ci-command: npm ci
+      - run:
+          name: Install Bun
+          command: |
+            curl -fsSL https://bun.sh/install | bash
+            echo 'export BUN_INSTALL="$HOME/.bun"' >> $BASH_ENV
+            echo 'export PATH="$BUN_INSTALL/bin:$PATH"' >> $BASH_ENV
+      - run:
+          name: Install Dependencies
+          command: |
+            source $BASH_ENV
+            bun install
 
   verify-dependencies:
     steps:
       - run:
           name: Verify Dependency Signatures
-          command: npm audit signatures
+          command: |
+            source $BASH_ENV
+            bunx npm audit signatures
 
   build-dist:
     steps:
       - run:
           name: Build Distribution Bundle
-          command: npm run build
+          command: |
+            source $BASH_ENV
+            bun run build
 
 jobs:
   test:
@@ -38,7 +46,9 @@ jobs:
       - verify-dependencies
       - run:
           name: Run Tests with Coverage
-          command: npx jest --coverage
+          command: |
+            source $BASH_ENV
+            bun test --coverage
       - run:
           name: Upload Coverage to Codecov
           command: |
@@ -61,7 +71,9 @@ jobs:
       - verify-dependencies
       - run:
           name: Run Tests
-          command: npx jest
+          command: |
+            source $BASH_ENV
+            bun test
       - build-dist
 
 workflows:
