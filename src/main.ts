@@ -24,13 +24,13 @@ export function getPlatform(): Platform {
 
     switch (platform) {
     case 'linux':
-        osName = 'Linux';
+        osName = 'linux';
         break;
     case 'darwin':
-        osName = 'Darwin';
+        osName = 'darwin';
         break;
     case 'win32':
-        osName = 'Windows';
+        osName = 'windows';
         break;
     default:
         throw new Error(`Unsupported platform: ${platform}`);
@@ -38,7 +38,7 @@ export function getPlatform(): Platform {
 
     switch (arch) {
     case 'x64':
-        archName = 'x86_64';
+        archName = 'amd64';
         break;
     case 'arm64':
         archName = 'arm64';

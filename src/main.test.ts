@@ -106,57 +106,57 @@ describe('getPlatform', () => {
         Object.defineProperty(process, 'arch', { value: archVal });
     };
 
-    it('returns Linux x86_64 for linux x64', () => {
+    it('returns linux amd64 for linux x64', () => {
         setPlatform('linux', 'x64');
         expect(getPlatform()).toEqual({
-            os: 'Linux',
-            arch: 'x86_64',
-            assetSuffix: 'Linux_x86_64',
+            os: 'linux',
+            arch: 'amd64',
+            assetSuffix: 'linux_amd64',
         });
     });
 
-    it('returns Linux arm64 for linux arm64', () => {
+    it('returns linux arm64 for linux arm64', () => {
         setPlatform('linux', 'arm64');
         expect(getPlatform()).toEqual({
-            os: 'Linux',
+            os: 'linux',
             arch: 'arm64',
-            assetSuffix: 'Linux_arm64',
+            assetSuffix: 'linux_arm64',
         });
     });
 
-    it('returns Darwin x86_64 for darwin x64', () => {
+    it('returns darwin amd64 for darwin x64', () => {
         setPlatform('darwin', 'x64');
         expect(getPlatform()).toEqual({
-            os: 'Darwin',
-            arch: 'x86_64',
-            assetSuffix: 'Darwin_x86_64',
+            os: 'darwin',
+            arch: 'amd64',
+            assetSuffix: 'darwin_amd64',
         });
     });
 
-    it('returns Darwin arm64 for darwin arm64', () => {
+    it('returns darwin arm64 for darwin arm64', () => {
         setPlatform('darwin', 'arm64');
         expect(getPlatform()).toEqual({
-            os: 'Darwin',
+            os: 'darwin',
             arch: 'arm64',
-            assetSuffix: 'Darwin_arm64',
+            assetSuffix: 'darwin_arm64',
         });
     });
 
-    it('returns Windows x86_64 for win32 x64', () => {
+    it('returns windows amd64 for win32 x64', () => {
         setPlatform('win32', 'x64');
         expect(getPlatform()).toEqual({
-            os: 'Windows',
-            arch: 'x86_64',
-            assetSuffix: 'Windows_x86_64',
+            os: 'windows',
+            arch: 'amd64',
+            assetSuffix: 'windows_amd64',
         });
     });
 
-    it('returns Windows arm64 for win32 arm64', () => {
+    it('returns windows arm64 for win32 arm64', () => {
         setPlatform('win32', 'arm64');
         expect(getPlatform()).toEqual({
-            os: 'Windows',
+            os: 'windows',
             arch: 'arm64',
-            assetSuffix: 'Windows_arm64',
+            assetSuffix: 'windows_arm64',
         });
     });
 
@@ -176,51 +176,51 @@ describe('getPlatform', () => {
 describe('extractChecksum', () => {
     it('extracts checksum for matching filename', () => {
         const checksums =
-            'abc123def456 actionlint_1.7.12_Linux_x86_64.tar.gz\n' +
-            '789ghi012jkl actionlint_1.7.12_Darwin_arm64.tar.gz';
-        expect(extractChecksum(checksums, 'actionlint_1.7.12_Linux_x86_64.tar.gz')).toBe('abc123def456');
+            'abc123def456  actionlint_1.7.12_linux_amd64.tar.gz\n' +
+            '789ghi012jkl  actionlint_1.7.12_darwin_arm64.tar.gz';
+        expect(extractChecksum(checksums, 'actionlint_1.7.12_linux_amd64.tar.gz')).toBe('abc123def456');
     });
 
     it('extracts checksum for a different matching filename', () => {
         const checksums =
-            'abc123def456 actionlint_1.7.12_Linux_x86_64.tar.gz\n' +
-            '789ghi012jkl actionlint_1.7.12_Darwin_arm64.tar.gz';
-        expect(extractChecksum(checksums, 'actionlint_1.7.12_Darwin_arm64.tar.gz')).toBe('789ghi012jkl');
+            'abc123def456  actionlint_1.7.12_linux_amd64.tar.gz\n' +
+            '789ghi012jkl  actionlint_1.7.12_darwin_arm64.tar.gz';
+        expect(extractChecksum(checksums, 'actionlint_1.7.12_darwin_arm64.tar.gz')).toBe('789ghi012jkl');
     });
 
     it('returns null when filename not found', () => {
         const checksums =
-            'abc123def456 actionlint_1.7.12_Linux_x86_64.tar.gz';
+            'abc123def456  actionlint_1.7.12_linux_amd64.tar.gz';
         expect(extractChecksum(checksums, 'nonexistent.tar.gz')).toBeNull();
     });
 
     it('returns null for empty content', () => {
-        expect(extractChecksum('', 'actionlint_1.7.12_Linux_x86_64.tar.gz')).toBeNull();
+        expect(extractChecksum('', 'actionlint_1.7.12_linux_amd64.tar.gz')).toBeNull();
     });
 
     it('handles extra whitespace between checksum and filename', () => {
-        const checksums = 'abc123def456    actionlint_1.7.12_Linux_x86_64.tar.gz';
-        expect(extractChecksum(checksums, 'actionlint_1.7.12_Linux_x86_64.tar.gz')).toBe('abc123def456');
+        const checksums = 'abc123def456    actionlint_1.7.12_linux_amd64.tar.gz';
+        expect(extractChecksum(checksums, 'actionlint_1.7.12_linux_amd64.tar.gz')).toBe('abc123def456');
     });
 
     it('handles trailing newline', () => {
-        const checksums = 'abc123def456 actionlint_1.7.12_Linux_x86_64.tar.gz\n';
-        expect(extractChecksum(checksums, 'actionlint_1.7.12_Linux_x86_64.tar.gz')).toBe('abc123def456');
+        const checksums = 'abc123def456  actionlint_1.7.12_linux_amd64.tar.gz\n';
+        expect(extractChecksum(checksums, 'actionlint_1.7.12_linux_amd64.tar.gz')).toBe('abc123def456');
     });
 
     it('handles multiple entries and picks the correct one', () => {
         const checksums =
-            'aaa111 actionlint_1.7.12_Linux_x86_64.tar.gz\n' +
-            'bbb222 actionlint_1.7.12_Linux_arm64.tar.gz\n' +
-            'ccc333 actionlint_1.7.12_Darwin_x86_64.tar.gz\n' +
-            'ddd444 actionlint_1.7.12_Darwin_arm64.tar.gz\n' +
-            'eee555 actionlint_1.7.12_Windows_x86_64.tar.gz';
-        expect(extractChecksum(checksums, 'actionlint_1.7.12_Darwin_arm64.tar.gz')).toBe('ddd444');
+            'aaa111  actionlint_1.7.12_linux_amd64.tar.gz\n' +
+            'bbb222  actionlint_1.7.12_linux_arm64.tar.gz\n' +
+            'ccc333  actionlint_1.7.12_darwin_amd64.tar.gz\n' +
+            'ddd444  actionlint_1.7.12_darwin_arm64.tar.gz\n' +
+            'eee555  actionlint_1.7.12_windows_amd64.zip';
+        expect(extractChecksum(checksums, 'actionlint_1.7.12_darwin_arm64.tar.gz')).toBe('ddd444');
     });
 
     it('does not match partial filenames', () => {
-        const checksums = 'abc123 actionlint_1.7.12_Linux_x86_64.tar.gz';
-        expect(extractChecksum(checksums, 'actionlint_1.7.12_Linux_x86_64')).toBeNull();
+        const checksums = 'abc123  actionlint_1.7.12_linux_amd64.tar.gz';
+        expect(extractChecksum(checksums, 'actionlint_1.7.12_linux_amd64')).toBeNull();
     });
 });
 
@@ -399,16 +399,16 @@ describe('downloadActionlint', () => {
     it('returns cached path with .exe on Windows', async () => {
         const origPlatform = process.platform;
         Object.defineProperty(process, 'platform', { value: 'win32' });
-        tcState.findResult = 'C:\\cached\\actionlint\\x86_64';
+        tcState.findResult = 'C:\\cached\\actionlint\\amd64';
         const result = await downloadActionlint('1.7.12');
-        expect(result).toBe(path.join('C:\\cached\\actionlint\\x86_64', 'actionlint.exe'));
+        expect(result).toBe(path.join('C:\\cached\\actionlint\\amd64', 'actionlint.exe'));
         Object.defineProperty(process, 'platform', { value: origPlatform });
     });
 
     it('returns cached path when tool is in cache', async () => {
-        tcState.findResult = '/cached/actionlint/x86_64';
+        tcState.findResult = '/cached/actionlint/amd64';
         const result = await downloadActionlint('1.7.12');
-        expect(result).toBe(path.join('/cached/actionlint/x86_64', 'actionlint'));
+        expect(result).toBe(path.join('/cached/actionlint/amd64', 'actionlint'));
     });
 
     it('downloads and caches tool when not in cache', async () => {
@@ -420,7 +420,7 @@ describe('downloadActionlint', () => {
         const tarballHash = crypto.createHash('sha256').update(tarballContent).digest('hex');
         fsOverrides.readFileSync = (filePath: string) => {
             if (String(filePath).includes('checksums')) {
-                return `${tarballHash}  actionlint_1.7.12_Linux_x86_64.tar.gz\n`;
+                return `${tarballHash}  actionlint_1.7.12_linux_amd64.tar.gz\n`;
             }
             return '';
         };
@@ -439,7 +439,7 @@ describe('downloadActionlint', () => {
         fsOverrides.readFileSync = () => 'some other checksums';
 
         await expect(downloadActionlint('1.7.12')).rejects.toThrow(
-            'Could not find checksum for actionlint_1.7.12_Linux_x86_64.tar.gz in actionlint_1.7.12_checksums.txt',
+            'Could not find checksum for actionlint_1.7.12_linux_amd64.tar.gz in actionlint_1.7.12_checksums.txt',
         );
         fsOverrides.readFileSync = null;
     });
@@ -447,7 +447,7 @@ describe('downloadActionlint', () => {
     it('throws on checksum mismatch', async () => {
         tcState.findResult = null;
         tcState.downloadTool = async (url: string) => `/tmp/${path.basename(url)}`;
-        fsOverrides.readFileSync = () => 'expected_sha256  actionlint_1.7.12_Linux_x86_64.tar.gz\n';
+        fsOverrides.readFileSync = () => 'expected_sha256  actionlint_1.7.12_linux_amd64.tar.gz\n';
         fsOverrides.existsSync = () => true;
 
         await expect(downloadActionlint('1.7.12')).rejects.toThrow('Checksum mismatch');
@@ -462,7 +462,7 @@ describe('downloadActionlint', () => {
         tcState.cacheDir = async () => '/cached/dir';
 
         const tarballHash = crypto.createHash('sha256').update(tarballContent).digest('hex');
-        fsOverrides.readFileSync = () => `${tarballHash}  actionlint_1.7.12_Linux_x86_64.tar.gz\n`;
+        fsOverrides.readFileSync = () => `${tarballHash}  actionlint_1.7.12_linux_amd64.tar.gz\n`;
         fsOverrides.existsSync = () => false;
 
         await expect(downloadActionlint('1.7.12')).rejects.toThrow(
