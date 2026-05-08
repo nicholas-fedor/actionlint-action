@@ -1,3 +1,5 @@
+// @ts-nocheck
+/// <reference types="@types/bun" />
 import { describe, it, expect, mock, beforeEach, afterEach, afterAll } from 'bun:test';
 import * as path from 'path';
 import * as fs from 'fs';
