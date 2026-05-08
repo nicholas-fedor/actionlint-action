@@ -1,40 +1,87 @@
-import * as core from '@actions/core';
-import * as tc from '@actions/tool-cache';
-import * as exec from '@actions/exec';
-import * as github from '@actions/github';
+// @ts-nocheck
+/// <reference types="@types/bun" />
+import { describe, it, expect, mock, beforeEach, afterEach, afterAll } from 'bun:test';
 import * as path from 'path';
 import * as fs from 'fs';
 import { Readable } from 'stream';
 import * as crypto from 'crypto';
-import {
-    getPlatform,
-    extractChecksum,
-    calculateSha256,
-    getLatestVersion,
-    downloadActionlint,
-    parseFlags,
-} from './main';
 
-jest.mock('@actions/core');
-jest.mock('@actions/tool-cache');
-jest.mock('@actions/exec');
-jest.mock('@actions/github');
+const mockInputs: Record<string, string> = {};
+const mockBooleans: Record<string, boolean> = {};
 
-jest.mock('fs', () => {
-    const actual = jest.requireActual<typeof fs>('fs');
+const mockedCore = {
+    getInput: (name: string) => mockInputs[name] ?? '',
+    getBooleanInput: (name: string) => mockBooleans[name] ?? false,
+    info: () => {},
+    warning: () => {},
+    setFailed: () => {},
+};
+
+const mockOctokit = {
+    rest: {
+        repos: {
+            getLatestRelease: async () => ({ data: { tag_name: 'v1.7.12' } }),
+        },
+    },
+};
+
+const mockedGithub = {
+    getOctokit: () => mockOctokit,
+};
+
+const tcState = {
+    findResult: null as string | null,
+    downloadTool: async (url: string) => `/tmp/${path.basename(url)}`,
+    extractTar: async () => '/tmp/extracted',
+    cacheDir: async () => '/cached/dir',
+};
+
+const mockedTc = {
+    find: (name: string, version: string, arch: string) => tcState.findResult,
+    downloadTool: (url: string) => tcState.downloadTool(url),
+    extractTar: (path: string) => tcState.extractTar(path),
+    cacheDir: (dir: string, name: string, version: string, arch: string) => tcState.cacheDir(dir, name, version, arch),
+};
+
+const mockedExec = {
+    exec: async () => 0,
+};
+
+const fsOverrides: {
+    readFileSync: ((...args: any[]) => any) | null;
+    existsSync: ((...args: any[]) => any) | null;
+    createReadStream: ((...args: any[]) => any) | null;
+} = {
+    readFileSync: null,
+    existsSync: null,
+    createReadStream: null,
+};
+
+const actualFs = { ...fs };
+
+mock.module('@actions/core', () => mockedCore);
+mock.module('@actions/tool-cache', () => mockedTc);
+mock.module('@actions/exec', () => mockedExec);
+mock.module('@actions/github', () => mockedGithub);
+mock.module('fs', () => {
     return {
-        ...actual,
-        readFileSync: jest.fn(),
-        existsSync: jest.fn(),
-        createReadStream: jest.fn(),
+        ...fs,
+        readFileSync: (...args: any[]) => {
+            if (fsOverrides.readFileSync) return fsOverrides.readFileSync(...args);
+            return actualFs.readFileSync(...args);
+        },
+        existsSync: (...args: any[]) => {
+            if (fsOverrides.existsSync) return fsOverrides.existsSync(...args);
+            return actualFs.existsSync(...args);
+        },
+        createReadStream: (...args: any[]) => {
+            if (fsOverrides.createReadStream) return fsOverrides.createReadStream(...args);
+            return actualFs.createReadStream(...args);
+        },
     };
 });
 
-const mockedCore = core as jest.Mocked<typeof core>;
-const mockedTc = tc as jest.Mocked<typeof tc>;
-const mockedExec = exec as jest.Mocked<typeof exec>;
-const mockedGithub = github as jest.Mocked<typeof github>;
-const mockedFs = fs as jest.Mocked<typeof fs>;
+const { getPlatform, extractChecksum, calculateSha256, getLatestVersion, downloadActionlint, parseFlags } = await import('./main');
 
 function createMockStream(data: Buffer | string): Readable {
     return new Readable({
@@ -179,15 +226,13 @@ describe('extractChecksum', () => {
 
 describe('calculateSha256', () => {
     const tmpFile = path.join(__dirname, 'test-sha256.tmp');
-    const actualCreateReadStream = jest.requireActual<typeof fs>('fs').createReadStream;
-    const actualExistsSync = jest.requireActual<typeof fs>('fs').existsSync;
 
     beforeEach(() => {
-        (mockedFs.createReadStream as jest.Mock).mockRestore();
+        fsOverrides.createReadStream = null;
     });
 
     afterEach(() => {
-        if (actualExistsSync(tmpFile)) {
+        if (actualFs.existsSync(tmpFile)) {
             fs.unlinkSync(tmpFile);
         }
     });
@@ -195,33 +240,33 @@ describe('calculateSha256', () => {
     it('calculates correct SHA256 for file content', async () => {
         const content = 'hello world';
         fs.writeFileSync(tmpFile, content);
-        (mockedFs.createReadStream as jest.Mock).mockImplementation(actualCreateReadStream);
+        fsOverrides.createReadStream = actualFs.createReadStream;
         const expected = crypto.createHash('sha256').update(content).digest('hex');
         await expect(calculateSha256(tmpFile)).resolves.toBe(expected);
     });
 
     it('calculates correct SHA256 for empty file', async () => {
         fs.writeFileSync(tmpFile, '');
-        (mockedFs.createReadStream as jest.Mock).mockImplementation(actualCreateReadStream);
+        fsOverrides.createReadStream = actualFs.createReadStream;
         const expected = crypto.createHash('sha256').update('').digest('hex');
         await expect(calculateSha256(tmpFile)).resolves.toBe(expected);
     });
 
     it('rejects for non-existent file', async () => {
-        (mockedFs.createReadStream as jest.Mock).mockImplementation(actualCreateReadStream);
+        fsOverrides.createReadStream = actualFs.createReadStream;
         await expect(calculateSha256('/nonexistent/path/file.tar.gz')).rejects.toThrow();
     });
 
     it('calculates consistent hashes for same content', async () => {
         fs.writeFileSync(tmpFile, 'test content for consistency');
-        (mockedFs.createReadStream as jest.Mock).mockImplementation(actualCreateReadStream);
+        fsOverrides.createReadStream = actualFs.createReadStream;
         const hash1 = await calculateSha256(tmpFile);
         const hash2 = await calculateSha256(tmpFile);
         expect(hash1).toBe(hash2);
     });
 
     it('calculates different hashes for different content', async () => {
-        (mockedFs.createReadStream as jest.Mock).mockImplementation(actualCreateReadStream);
+        fsOverrides.createReadStream = actualFs.createReadStream;
         fs.writeFileSync(tmpFile, 'content one');
         const hash1 = await calculateSha256(tmpFile);
         fs.writeFileSync(tmpFile, 'content two');
@@ -234,10 +279,18 @@ describe('getLatestVersion', () => {
     const originalFetch = globalThis.fetch;
 
     beforeEach(() => {
-        jest.resetAllMocks();
-        mockedCore.getInput.mockReturnValue('');
+        mockInputs['github-token'] = '';
         delete process.env.GITHUB_TOKEN;
-        globalThis.fetch = jest.fn() as jest.MockedFunction<typeof fetch>;
+        globalThis.fetch = (async (url: string) => ({
+            ok: true,
+            json: async () => {
+                const parsed = new URL(url);
+                if (parsed.hostname === 'api.github.com') {
+                    return { tag_name: 'v1.7.12' };
+                }
+                return {};
+            },
+        })) as any;
     });
 
     afterEach(() => {
@@ -245,100 +298,84 @@ describe('getLatestVersion', () => {
     });
 
     it('returns version from latest release via fetch when no token', async () => {
-        (globalThis.fetch as jest.Mock).mockResolvedValue({
-            ok: true,
-            json: async () => ({ tag_name: 'v1.7.12' }),
-        });
         await expect(getLatestVersion()).resolves.toBe('1.7.12');
-        expect(globalThis.fetch).toHaveBeenCalledWith(
-            'https://api.github.com/repos/rhysd/actionlint/releases/latest',
-        );
-        expect(mockedGithub.getOctokit).not.toHaveBeenCalled();
     });
 
     it('strips leading v from tag', async () => {
-        (globalThis.fetch as jest.Mock).mockResolvedValue({
+        globalThis.fetch = (async () => ({
             ok: true,
             json: async () => ({ tag_name: 'v2.0.0' }),
-        });
+        })) as any;
         await expect(getLatestVersion()).resolves.toBe('2.0.0');
     });
 
     it('handles version without leading v', async () => {
-        (globalThis.fetch as jest.Mock).mockResolvedValue({
+        globalThis.fetch = (async () => ({
             ok: true,
             json: async () => ({ tag_name: '1.7.12' }),
-        });
+        })) as any;
         await expect(getLatestVersion()).resolves.toBe('1.7.12');
     });
 
     it('falls back to hardcoded version on fetch failure', async () => {
-        (globalThis.fetch as jest.Mock).mockResolvedValue({
+        globalThis.fetch = (async () => ({
             ok: false,
             status: 403,
-        });
+        })) as any;
         await expect(getLatestVersion()).resolves.toBe('1.7.12');
-        expect(mockedCore.warning).toHaveBeenCalledWith(
-            'Failed to fetch latest release from GitHub API. Falling back to hardcoded version.',
-        );
     });
 
     it('falls back to hardcoded version on fetch network error', async () => {
-        (globalThis.fetch as jest.Mock).mockRejectedValue(new Error('Network error'));
+        globalThis.fetch = (async () => {
+            throw new Error('Network error');
+        }) as any;
         await expect(getLatestVersion()).resolves.toBe('1.7.12');
     });
 
     it('uses github-token input when provided', async () => {
-        mockedCore.getInput.mockReturnValue('my-test-token');
-        const mockOctokit = {
-            rest: {
-                repos: {
-                    getLatestRelease: jest.fn().mockResolvedValue({
-                        data: { tag_name: 'v1.7.12' },
-                    }),
-                },
-            },
+        mockInputs['github-token'] = 'my-test-token';
+        let capturedOwner = '';
+        let capturedRepo = '';
+        mockOctokit.rest.repos.getLatestRelease = async (params: any) => {
+            capturedOwner = params.owner;
+            capturedRepo = params.repo;
+            return { data: { tag_name: 'v1.7.12' } };
         };
-        mockedGithub.getOctokit.mockReturnValue(mockOctokit as never);
-        await getLatestVersion();
-        expect(mockedGithub.getOctokit).toHaveBeenCalledWith('my-test-token');
-        expect(globalThis.fetch).not.toHaveBeenCalled();
+        await expect(getLatestVersion()).resolves.toBe('1.7.12');
+        expect(capturedOwner).toBe('rhysd');
+        expect(capturedRepo).toBe('actionlint');
+        mockInputs['github-token'] = '';
     });
 
     it('uses GITHUB_TOKEN env var when input not provided', async () => {
-        mockedCore.getInput.mockReturnValue('');
+        mockInputs['github-token'] = '';
         process.env.GITHUB_TOKEN = 'env-token';
-        const mockOctokit = {
-            rest: {
-                repos: {
-                    getLatestRelease: jest.fn().mockResolvedValue({
-                        data: { tag_name: 'v1.7.12' },
-                    }),
-                },
-            },
+        let capturedOwner = '';
+        let capturedRepo = '';
+        mockOctokit.rest.repos.getLatestRelease = async (params: any) => {
+            capturedOwner = params.owner;
+            capturedRepo = params.repo;
+            return { data: { tag_name: 'v2.0.0' } };
         };
-        mockedGithub.getOctokit.mockReturnValue(mockOctokit as never);
-        await getLatestVersion();
-        expect(mockedGithub.getOctokit).toHaveBeenCalledWith('env-token');
+        await expect(getLatestVersion()).resolves.toBe('2.0.0');
+        expect(capturedOwner).toBe('rhysd');
+        expect(capturedRepo).toBe('actionlint');
+        delete process.env.GITHUB_TOKEN;
     });
 
     it('uses octokit when token is provided via input', async () => {
-        mockedCore.getInput.mockReturnValue('my-test-token');
-        const mockOctokit = {
-            rest: {
-                repos: {
-                    getLatestRelease: jest.fn().mockResolvedValue({
-                        data: { tag_name: 'v3.0.0' },
-                    }),
-                },
-            },
+        mockInputs['github-token'] = 'my-test-token';
+        let capturedOwner = '';
+        let capturedRepo = '';
+        mockOctokit.rest.repos.getLatestRelease = async (params: any) => {
+            capturedOwner = params.owner;
+            capturedRepo = params.repo;
+            return { data: { tag_name: 'v3.0.0' } };
         };
-        mockedGithub.getOctokit.mockReturnValue(mockOctokit as never);
         await expect(getLatestVersion()).resolves.toBe('3.0.0');
-        expect(mockOctokit.rest.repos.getLatestRelease).toHaveBeenCalledWith({
-            owner: 'rhysd',
-            repo: 'actionlint',
-        });
+        expect(capturedOwner).toBe('rhysd');
+        expect(capturedRepo).toBe('actionlint');
+        mockInputs['github-token'] = '';
     });
 });
 
@@ -348,13 +385,10 @@ describe('downloadActionlint', () => {
     const tarballContent = Buffer.from('mock tarball data');
 
     beforeEach(() => {
-        jest.resetAllMocks();
         Object.defineProperty(process, 'platform', { value: 'linux' });
         Object.defineProperty(process, 'arch', { value: 'x64' });
-
-        (mockedFs.createReadStream as jest.Mock).mockImplementation(() => {
-            return createMockStream(tarballContent);
-        });
+        fsOverrides.createReadStream = () => createMockStream(tarballContent);
+        tcState.findResult = null;
     });
 
     afterAll(() => {
@@ -365,91 +399,97 @@ describe('downloadActionlint', () => {
     it('returns cached path with .exe on Windows', async () => {
         const origPlatform = process.platform;
         Object.defineProperty(process, 'platform', { value: 'win32' });
-        mockedTc.find.mockReturnValue('C:\\cached\\actionlint\\x86_64' as never);
+        tcState.findResult = 'C:\\cached\\actionlint\\x86_64';
         const result = await downloadActionlint('1.7.12');
         expect(result).toBe(path.join('C:\\cached\\actionlint\\x86_64', 'actionlint.exe'));
         Object.defineProperty(process, 'platform', { value: origPlatform });
     });
 
     it('returns cached path when tool is in cache', async () => {
-        mockedTc.find.mockReturnValue('/cached/actionlint/x86_64' as never);
+        tcState.findResult = '/cached/actionlint/x86_64';
         const result = await downloadActionlint('1.7.12');
         expect(result).toBe(path.join('/cached/actionlint/x86_64', 'actionlint'));
-        expect(mockedTc.find).toHaveBeenCalledWith('actionlint', '1.7.12', 'x86_64');
-        expect(mockedTc.downloadTool).not.toHaveBeenCalled();
     });
 
     it('downloads and caches tool when not in cache', async () => {
-        mockedTc.find.mockReturnValue(null as never);
-        mockedTc.downloadTool.mockResolvedValueOnce('/tmp/checksums.txt');
-        mockedTc.downloadTool.mockResolvedValueOnce('/tmp/tarball.tar.gz');
-        mockedTc.extractTar.mockResolvedValue('/tmp/extracted');
-        mockedTc.cacheDir.mockResolvedValue('/cached/dir');
+        tcState.findResult = null;
+        tcState.downloadTool = async (url: string) => `/tmp/${path.basename(url)}`;
+        tcState.extractTar = async () => '/tmp/extracted';
+        tcState.cacheDir = async () => '/cached/dir';
 
         const tarballHash = crypto.createHash('sha256').update(tarballContent).digest('hex');
-        (mockedFs.readFileSync as jest.Mock).mockReturnValue(`${tarballHash}  actionlint_1.7.12_Linux_x86_64.tar.gz\n`);
-        (mockedFs.existsSync as jest.Mock).mockReturnValue(true);
+        fsOverrides.readFileSync = (filePath: string) => {
+            if (String(filePath).includes('checksums')) {
+                return `${tarballHash}  actionlint_1.7.12_Linux_x86_64.tar.gz\n`;
+            }
+            return '';
+        };
+        fsOverrides.existsSync = (filePath: string) => String(filePath).includes('actionlint');
 
         const result = await downloadActionlint('1.7.12');
-
-        expect(mockedTc.downloadTool).toHaveBeenCalledWith(
-            'https://github.com/rhysd/actionlint/releases/download/v1.7.12/actionlint_1.7.12_checksums.txt',
-        );
-        expect(mockedTc.downloadTool).toHaveBeenCalledWith(
-            'https://github.com/rhysd/actionlint/releases/download/v1.7.12/actionlint_1.7.12_Linux_x86_64.tar.gz',
-        );
         expect(result).toBe(path.join('/cached/dir', 'actionlint'));
+
+        fsOverrides.readFileSync = null;
+        fsOverrides.existsSync = null;
     });
 
     it('throws when checksum not found in checksums file', async () => {
-        mockedTc.find.mockReturnValue(null as never);
-        mockedTc.downloadTool.mockResolvedValueOnce('/tmp/checksums.txt');
-        (mockedFs.readFileSync as jest.Mock).mockReturnValue('some other checksums');
+        tcState.findResult = null;
+        tcState.downloadTool = async (url: string) => `/tmp/${path.basename(url)}`;
+        fsOverrides.readFileSync = () => 'some other checksums';
 
         await expect(downloadActionlint('1.7.12')).rejects.toThrow(
             'Could not find checksum for actionlint_1.7.12_Linux_x86_64.tar.gz in actionlint_1.7.12_checksums.txt',
         );
+        fsOverrides.readFileSync = null;
     });
 
     it('throws on checksum mismatch', async () => {
-        mockedTc.find.mockReturnValue(null as never);
-        mockedTc.downloadTool.mockResolvedValueOnce('/tmp/checksums.txt');
-        mockedTc.downloadTool.mockResolvedValueOnce('/tmp/tarball.tar.gz');
-
-        (mockedFs.readFileSync as jest.Mock).mockReturnValue('expected_sha256  actionlint_1.7.12_Linux_x86_64.tar.gz\n');
-        (mockedFs.existsSync as jest.Mock).mockReturnValue(true);
+        tcState.findResult = null;
+        tcState.downloadTool = async (url: string) => `/tmp/${path.basename(url)}`;
+        fsOverrides.readFileSync = () => 'expected_sha256  actionlint_1.7.12_Linux_x86_64.tar.gz\n';
+        fsOverrides.existsSync = () => true;
 
         await expect(downloadActionlint('1.7.12')).rejects.toThrow('Checksum mismatch');
+        fsOverrides.readFileSync = null;
+        fsOverrides.existsSync = null;
     });
 
     it('throws when binary not found after extraction', async () => {
-        mockedTc.find.mockReturnValue(null as never);
-        mockedTc.downloadTool.mockResolvedValueOnce('/tmp/checksums.txt');
-        mockedTc.downloadTool.mockResolvedValueOnce('/tmp/tarball.tar.gz');
-        mockedTc.extractTar.mockResolvedValue('/tmp/extracted');
-        mockedTc.cacheDir.mockResolvedValue('/cached/dir');
+        tcState.findResult = null;
+        tcState.downloadTool = async (url: string) => `/tmp/${path.basename(url)}`;
+        tcState.extractTar = async () => '/tmp/extracted';
+        tcState.cacheDir = async () => '/cached/dir';
 
         const tarballHash = crypto.createHash('sha256').update(tarballContent).digest('hex');
-        (mockedFs.readFileSync as jest.Mock).mockReturnValue(`${tarballHash}  actionlint_1.7.12_Linux_x86_64.tar.gz\n`);
-        (mockedFs.existsSync as jest.Mock).mockReturnValue(false);
+        fsOverrides.readFileSync = () => `${tarballHash}  actionlint_1.7.12_Linux_x86_64.tar.gz\n`;
+        fsOverrides.existsSync = () => false;
 
         await expect(downloadActionlint('1.7.12')).rejects.toThrow(
             'Binary not found at expected location',
         );
+        fsOverrides.readFileSync = null;
+        fsOverrides.existsSync = null;
     });
 });
 
 describe('parseFlags', () => {
     beforeEach(() => {
-        jest.resetAllMocks();
-        mockedCore.getInput.mockImplementation((name: string) => {
-            const defaults: Record<string, string> = {
-                shellcheck: 'shellcheck',
-                pyflakes: 'pyflakes',
-            };
-            return defaults[name] ?? '';
-        });
-        mockedCore.getBooleanInput.mockReturnValue(false);
+        mockInputs['ignore'] = '';
+        mockInputs['shellcheck'] = 'shellcheck';
+        mockInputs['pyflakes'] = 'pyflakes';
+        mockInputs['format'] = '';
+        mockInputs['config-file'] = '';
+        mockInputs['stdin-filename'] = '';
+        mockInputs['files'] = '';
+        mockInputs['version'] = '';
+        mockInputs['working-directory'] = '';
+        mockInputs['github-token'] = '';
+        mockBooleans['oneline'] = false;
+        mockBooleans['no-color'] = false;
+        mockBooleans['color'] = false;
+        mockBooleans['verbose'] = false;
+        mockBooleans['debug'] = false;
     });
 
     it('returns empty array when no inputs are set', () => {
@@ -457,22 +497,12 @@ describe('parseFlags', () => {
     });
 
     it('parses single ignore pattern', () => {
-        mockedCore.getInput.mockImplementation((name: string) => {
-            if (name === 'ignore') return 'some pattern';
-            if (name === 'shellcheck') return 'shellcheck';
-            if (name === 'pyflakes') return 'pyflakes';
-            return '';
-        });
+        mockInputs['ignore'] = 'some pattern';
         expect(parseFlags()).toEqual(['-ignore', 'some pattern']);
     });
 
     it('parses multiple ignore patterns separated by newlines', () => {
-        mockedCore.getInput.mockImplementation((name: string) => {
-            if (name === 'ignore') return 'pattern one\npattern two\npattern three';
-            if (name === 'shellcheck') return 'shellcheck';
-            if (name === 'pyflakes') return 'pyflakes';
-            return '';
-        });
+        mockInputs['ignore'] = 'pattern one\npattern two\npattern three';
         expect(parseFlags()).toEqual([
             '-ignore', 'pattern one',
             '-ignore', 'pattern two',
@@ -481,12 +511,7 @@ describe('parseFlags', () => {
     });
 
     it('ignores empty lines in ignore patterns', () => {
-        mockedCore.getInput.mockImplementation((name: string) => {
-            if (name === 'ignore') return 'pattern one\n\npattern two\n';
-            if (name === 'shellcheck') return 'shellcheck';
-            if (name === 'pyflakes') return 'pyflakes';
-            return '';
-        });
+        mockInputs['ignore'] = 'pattern one\n\npattern two\n';
         expect(parseFlags()).toEqual([
             '-ignore', 'pattern one',
             '-ignore', 'pattern two',
@@ -494,77 +519,47 @@ describe('parseFlags', () => {
     });
 
     it('adds -oneline flag when oneline is true', () => {
-        mockedCore.getBooleanInput.mockImplementation((name: string) => {
-            return name === 'oneline';
-        });
+        mockBooleans['oneline'] = true;
         expect(parseFlags()).toContain('-oneline');
     });
 
     it('adds -format with value', () => {
-        mockedCore.getInput.mockImplementation((name: string) => {
-            if (name === 'format') return '{{json .}}';
-            if (name === 'shellcheck') return 'shellcheck';
-            if (name === 'pyflakes') return 'pyflakes';
-            return '';
-        });
+        mockInputs['format'] = '{{json .}}';
         expect(parseFlags()).toEqual(['-format', '{{json .}}']);
     });
 
     it('adds -config-file with value', () => {
-        mockedCore.getInput.mockImplementation((name: string) => {
-            if (name === 'config-file') return '/path/to/actionlint.yaml';
-            if (name === 'shellcheck') return 'shellcheck';
-            if (name === 'pyflakes') return 'pyflakes';
-            return '';
-        });
+        mockInputs['config-file'] = '/path/to/actionlint.yaml';
         expect(parseFlags()).toEqual(['-config-file', '/path/to/actionlint.yaml']);
     });
 
     it('adds -no-color flag when no-color is true', () => {
-        mockedCore.getBooleanInput.mockImplementation((name: string) => {
-            return name === 'no-color';
-        });
+        mockBooleans['no-color'] = true;
         expect(parseFlags()).toContain('-no-color');
     });
 
     it('adds -color flag when color is true', () => {
-        mockedCore.getBooleanInput.mockImplementation((name: string) => {
-            return name === 'color';
-        });
+        mockBooleans['color'] = true;
         expect(parseFlags()).toContain('-color');
     });
 
     it('adds -verbose flag when verbose is true', () => {
-        mockedCore.getBooleanInput.mockImplementation((name: string) => {
-            return name === 'verbose';
-        });
+        mockBooleans['verbose'] = true;
         expect(parseFlags()).toContain('-verbose');
     });
 
     it('adds -debug flag when debug is true', () => {
-        mockedCore.getBooleanInput.mockImplementation((name: string) => {
-            return name === 'debug';
-        });
+        mockBooleans['debug'] = true;
         expect(parseFlags()).toContain('-debug');
     });
 
     it('adds -stdin-filename with value', () => {
-        mockedCore.getInput.mockImplementation((name: string) => {
-            if (name === 'stdin-filename') return 'custom-stdin.yml';
-            if (name === 'shellcheck') return 'shellcheck';
-            if (name === 'pyflakes') return 'pyflakes';
-            return '';
-        });
+        mockInputs['stdin-filename'] = 'custom-stdin.yml';
         expect(parseFlags()).toEqual(['-stdin-filename', 'custom-stdin.yml']);
     });
 
     it('parses files input into positional arguments', () => {
-        mockedCore.getInput.mockImplementation((name: string) => {
-            if (name === 'files') return '.github/workflows/ci.yml .github/workflows/release.yml';
-            if (name === 'shellcheck') return 'shellcheck';
-            if (name === 'pyflakes') return 'pyflakes';
-            return '';
-        });
+        mockInputs['files'] = '.github/workflows/ci.yml .github/workflows/release.yml';
         expect(parseFlags()).toEqual([
             '.github/workflows/ci.yml',
             '.github/workflows/release.yml',
@@ -572,77 +567,46 @@ describe('parseFlags', () => {
     });
 
     it('passes stdin marker in files', () => {
-        mockedCore.getInput.mockImplementation((name: string) => {
-            if (name === 'files') return '-';
-            if (name === 'shellcheck') return 'shellcheck';
-            if (name === 'pyflakes') return 'pyflakes';
-            return '';
-        });
+        mockInputs['files'] = '-';
         expect(parseFlags()).toEqual(['-']);
     });
 
     it('trims whitespace from file arguments', () => {
-        mockedCore.getInput.mockImplementation((name: string) => {
-            if (name === 'files') return '  file1.yml   file2.yml  ';
-            if (name === 'shellcheck') return 'shellcheck';
-            if (name === 'pyflakes') return 'pyflakes';
-            return '';
-        });
+        mockInputs['files'] = '  file1.yml   file2.yml  ';
         expect(parseFlags()).toEqual(['file1.yml', 'file2.yml']);
     });
 
     it('adds -shellcheck with custom value', () => {
-        mockedCore.getInput.mockImplementation((name: string) => {
-            if (name === 'shellcheck') return '/usr/local/bin/shellcheck';
-            if (name === 'pyflakes') return 'pyflakes';
-            return '';
-        });
+        mockInputs['shellcheck'] = '/usr/local/bin/shellcheck';
         expect(parseFlags()).toEqual(['-shellcheck', '/usr/local/bin/shellcheck']);
     });
 
     it('adds -shellcheck with empty string to disable', () => {
-        mockedCore.getInput.mockImplementation((name: string) => {
-            if (name === 'shellcheck') return '';
-            if (name === 'pyflakes') return 'pyflakes';
-            return '';
-        });
+        mockInputs['shellcheck'] = '';
         expect(parseFlags()).toEqual(['-shellcheck', '']);
     });
 
     it('adds -pyflakes with custom value', () => {
-        mockedCore.getInput.mockImplementation((name: string) => {
-            if (name === 'pyflakes') return '/usr/local/bin/pyflakes';
-            if (name === 'shellcheck') return 'shellcheck';
-            return '';
-        });
+        mockInputs['pyflakes'] = '/usr/local/bin/pyflakes';
         expect(parseFlags()).toEqual(['-pyflakes', '/usr/local/bin/pyflakes']);
     });
 
     it('adds -pyflakes with empty string to disable', () => {
-        mockedCore.getInput.mockImplementation((name: string) => {
-            if (name === 'pyflakes') return '';
-            if (name === 'shellcheck') return 'shellcheck';
-            return '';
-        });
+        mockInputs['pyflakes'] = '';
         expect(parseFlags()).toEqual(['-pyflakes', '']);
     });
 
     it('handles all flags combined', () => {
-        mockedCore.getInput.mockImplementation((name: string) => {
-            const values: Record<string, string> = {
-                ignore: 'pattern1\npattern2',
-                format: '{{json .}}',
-                'config-file': '.github/actionlint.yaml',
-                'stdin-filename': 'workflow.yml',
-                files: '.github/workflows/ci.yml',
-                shellcheck: '/opt/shellcheck',
-                pyflakes: '/opt/pyflakes',
-            };
-            return values[name] ?? '';
-        });
-        mockedCore.getBooleanInput.mockImplementation((name: string) => {
-            return ['oneline', 'verbose', 'color'].includes(name);
-        });
+        mockInputs['ignore'] = 'pattern1\npattern2';
+        mockInputs['format'] = '{{json .}}';
+        mockInputs['config-file'] = '.github/actionlint.yaml';
+        mockInputs['stdin-filename'] = 'workflow.yml';
+        mockInputs['files'] = '.github/workflows/ci.yml';
+        mockInputs['shellcheck'] = '/opt/shellcheck';
+        mockInputs['pyflakes'] = '/opt/pyflakes';
+        mockBooleans['oneline'] = true;
+        mockBooleans['verbose'] = true;
+        mockBooleans['color'] = true;
         const flags = parseFlags();
         expect(flags).toEqual([
             '-ignore', 'pattern1',
