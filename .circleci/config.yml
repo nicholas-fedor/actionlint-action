@@ -14,12 +14,11 @@ commands:
           name: Install Bun
           command: |
             curl -fsSL https://bun.sh/install | bash
-            echo 'export BUN_INSTALL="$HOME/.bun"' >> $BASH_ENV
-            echo 'export PATH="$BUN_INSTALL/bin:$PATH"' >> $BASH_ENV
+            echo 'export PATH="$HOME/.bun/bin:$PATH"' >> $BASH_ENV
       - run:
           name: Install Dependencies
           command: |
-            source $BASH_ENV
+            export PATH="$HOME/.bun/bin:$PATH"
             bun install
 
   verify-dependencies:
@@ -27,7 +26,7 @@ commands:
       - run:
           name: Verify Dependency Signatures
           command: |
-            source $BASH_ENV
+            export PATH="$HOME/.bun/bin:$PATH"
             bunx npm audit signatures
 
   build-dist:
@@ -35,7 +34,7 @@ commands:
       - run:
           name: Build Distribution Bundle
           command: |
-            source $BASH_ENV
+            export PATH="$HOME/.bun/bin:$PATH"
             bun run build
 
 jobs:
@@ -47,7 +46,7 @@ jobs:
       - run:
           name: Run Tests with Coverage
           command: |
-            source $BASH_ENV
+            export PATH="$HOME/.bun/bin:$PATH"
             bun test --coverage
       - run:
           name: Upload Coverage to Codecov
@@ -72,7 +71,7 @@ jobs:
       - run:
           name: Run Tests
           command: |
-            source $BASH_ENV
+            export PATH="$HOME/.bun/bin:$PATH"
             bun test
       - build-dist
 
