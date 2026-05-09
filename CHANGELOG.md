@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Change chore commit release value from true to patch by @nicholas-fedor in [#61](https://github.com/nicholas-fedor/actionlint-action/pull/61)
 - Move releaseRules into plugin configuration by @nicholas-fedor in [#60](https://github.com/nicholas-fedor/actionlint-action/pull/60)
 - Enable chore commits as release triggers by @nicholas-fedor in [#59](https://github.com/nicholas-fedor/actionlint-action/pull/59)
 
