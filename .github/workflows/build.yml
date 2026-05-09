@@ -56,7 +56,7 @@ jobs:
           fi
 
       - name: Create Pull Request
-        if: steps.check.outputs.changed == 'true' && github.event_name == 'push'
+        if: steps.check.outputs.changed == 'true'
         id: create_pr
         uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
         with:
@@ -76,9 +76,3 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PULL_REQUEST_NUMBER: ${{ steps.create_pr.outputs.pull-request-number }}
         run: gh pr merge --auto --squash "${PULL_REQUEST_NUMBER}"
-
-      - name: Fail if dist/index.js is Stale
-        if: steps.check.outputs.changed == 'true' && github.event_name == 'pull_request'
-        run: |
-          echo "::error::dist/index.js is out of date. Run 'bun run build' and commit the result."
-          exit 1
