@@ -8,7 +8,6 @@ on:
       - src/**
       - package.json
       - bun.lock
-  pull_request:
   workflow_dispatch:
 
 permissions:
