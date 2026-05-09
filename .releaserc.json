@@ -5,7 +5,7 @@
     {
       "path": "@semantic-release/commit-analyzer",
       "releaseRules": [
-        { "type": "chore", "release": true }
+        { "type": "chore", "release": "patch" }
       ]
     },
     "@semantic-release/release-notes-generator",
