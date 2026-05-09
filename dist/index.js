@@ -22844,7 +22844,7 @@ var require_eventsource = __commonJS((exports, module) => {
 
 // node_modules/undici/index.js
 var require_undici = __commonJS((exports, module) => {
-  var __filename = "/home/nick/Projects/GH-Actions/actionlint-action/node_modules/undici/index.js";
+  var __filename = "/home/runner/work/actionlint-action/actionlint-action/node_modules/undici/index.js";
   var Client = require_client();
   var Dispatcher = require_dispatcher();
   var Pool = require_pool();
@@ -27407,7 +27407,7 @@ class RetryHelper {
 }
 
 // node_modules/@actions/tool-cache/lib/tool-cache.js
-var __dirname = "/home/nick/Projects/GH-Actions/actionlint-action/node_modules/@actions/tool-cache/lib";
+var __dirname = "/home/runner/work/actionlint-action/actionlint-action/node_modules/@actions/tool-cache/lib";
 var __awaiter8 = function(thisArg, _arguments, P, generator) {
   function adopt(value) {
     return value instanceof P ? value : new P(function(resolve2) {
@@ -31382,20 +31382,20 @@ function getPlatform() {
   let assetSuffix;
   switch (platform2) {
     case "linux":
-      osName = "Linux";
+      osName = "linux";
       break;
     case "darwin":
-      osName = "Darwin";
+      osName = "darwin";
       break;
     case "win32":
-      osName = "Windows";
+      osName = "windows";
       break;
     default:
       throw new Error(`Unsupported platform: ${platform2}`);
   }
   switch (arch3) {
     case "x64":
-      archName = "x86_64";
+      archName = "amd64";
       break;
     case "arm64":
       archName = "arm64";
