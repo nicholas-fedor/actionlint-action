@@ -12,6 +12,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add automated dist rebuild workflow by @nicholas-fedor in [#54](https://github.com/nicholas-fedor/actionlint-action/pull/54)
 
+### Changed
+
+- Move releaseRules into plugin configuration by @nicholas-fedor in [#60](https://github.com/nicholas-fedor/actionlint-action/pull/60)
+- Enable chore commits as release triggers by @nicholas-fedor in [#59](https://github.com/nicholas-fedor/actionlint-action/pull/59)
+
+### Chores
+
+- Rebuild dist/index.js by @github-actions[bot] in [#58](https://github.com/nicholas-fedor/actionlint-action/pull/58)
+
+### Removed
+
+- Remove redundant conditional and stale dist check by @nicholas-fedor in [#56](https://github.com/nicholas-fedor/actionlint-action/pull/56)
+
 ## [1.0.2] - 2026-05-08
 
 ### Fixed
