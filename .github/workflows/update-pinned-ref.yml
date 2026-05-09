@@ -1,5 +1,6 @@
 ---
 name: Update Pinned Ref
+
 on:
   workflow_dispatch:
     inputs:
