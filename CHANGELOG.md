@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Chores
+
+- Lock file maintenance by @renovate[bot] in [#66](https://github.com/nicholas-fedor/actionlint-action/pull/66)
+- Update dependency @types/node to v25.6.2 by @renovate[bot] in [#65](https://github.com/nicholas-fedor/actionlint-action/pull/65)
+- Update dependency @types/node to v25.6.1 by @renovate[bot] in [#63](https://github.com/nicholas-fedor/actionlint-action/pull/63)
+
+## [1.0.3] - 2026-05-09
+
 ### Added
 
 - Add automated dist rebuild workflow by @nicholas-fedor in [#54](https://github.com/nicholas-fedor/actionlint-action/pull/54)
@@ -94,7 +102,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Compare Releases
 
-- [unreleased](https://github.com/nicholas-fedor/actionlint-action/compare/v1.0.2...HEAD)
+- [unreleased](https://github.com/nicholas-fedor/actionlint-action/compare/v1.0.3...HEAD)
+- [1.0.3](https://github.com/nicholas-fedor/actionlint-action/compare/v1.0.2...v1.0.3)
 - [1.0.2](https://github.com/nicholas-fedor/actionlint-action/compare/v1.0.1...v1.0.2)
 - [1.0.1](https://github.com/nicholas-fedor/actionlint-action/compare/v1.0.0...v1.0.1)
 
