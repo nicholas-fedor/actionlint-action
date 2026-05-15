@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Chores
 
+- Update github/codeql-action action to v4.35.5 by @renovate[bot] in [#77](https://github.com/nicholas-fedor/actionlint-action/pull/77)
+- Rebuild dist/index.js by @github-actions[bot] in [#74](https://github.com/nicholas-fedor/actionlint-action/pull/74)
+- Update step-security/harden-runner action to v2.19.3 by @renovate[bot] in [#73](https://github.com/nicholas-fedor/actionlint-action/pull/73)
 - Update dependency @types/node to v25.7.0 by @renovate[bot] in [#72](https://github.com/nicholas-fedor/actionlint-action/pull/72)
 - Update step-security/harden-runner action to v2.19.2 by @renovate[bot] in [#70](https://github.com/nicholas-fedor/actionlint-action/pull/70)
 - Update semantic-release monorepo by @renovate[bot] in [#68](https://github.com/nicholas-fedor/actionlint-action/pull/68)
