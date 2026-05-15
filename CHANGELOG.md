@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Chores
 
+- Update dependency @types/node to v25.7.0 by @renovate[bot] in [#72](https://github.com/nicholas-fedor/actionlint-action/pull/72)
 - Update step-security/harden-runner action to v2.19.2 by @renovate[bot] in [#70](https://github.com/nicholas-fedor/actionlint-action/pull/70)
 - Update semantic-release monorepo by @renovate[bot] in [#68](https://github.com/nicholas-fedor/actionlint-action/pull/68)
 - Rebuild dist/index.js by @github-actions[bot] in [#67](https://github.com/nicholas-fedor/actionlint-action/pull/67)
