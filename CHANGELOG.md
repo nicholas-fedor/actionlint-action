@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Chores
 
+- Update github actions by @renovate[bot] in [#101](https://github.com/nicholas-fedor/actionlint-action/pull/101)
+- Rebuild dist/index.js by @github-actions[bot] in [#99](https://github.com/nicholas-fedor/actionlint-action/pull/99)
+- Lock file maintenance by @renovate[bot] in [#98](https://github.com/nicholas-fedor/actionlint-action/pull/98)
+- Rebuild dist/index.js by @github-actions[bot] in [#96](https://github.com/nicholas-fedor/actionlint-action/pull/96)
 - Lock file maintenance by @renovate[bot] in [#95](https://github.com/nicholas-fedor/actionlint-action/pull/95)
 - Update dependency @types/node to v25.9.1 by @renovate[bot] in [#93](https://github.com/nicholas-fedor/actionlint-action/pull/93)
 - Update github/codeql-action action to v4.36.0 by @renovate[bot] in [#92](https://github.com/nicholas-fedor/actionlint-action/pull/92)
