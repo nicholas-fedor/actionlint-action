@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Chores
 
+- Update github actions to v4.36.2 by @renovate[bot] in [#102](https://github.com/nicholas-fedor/actionlint-action/pull/102)
 - Update github actions by @renovate[bot] in [#101](https://github.com/nicholas-fedor/actionlint-action/pull/101)
 - Rebuild dist/index.js by @github-actions[bot] in [#99](https://github.com/nicholas-fedor/actionlint-action/pull/99)
 - Lock file maintenance by @renovate[bot] in [#98](https://github.com/nicholas-fedor/actionlint-action/pull/98)
