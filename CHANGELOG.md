@@ -10,6 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Chores
 
+- Lock file maintenance by @renovate[bot] in [#107](https://github.com/nicholas-fedor/actionlint-action/pull/107)
+
+## [1.0.4] - 2026-06-07
+
+### Chores
+
 - Update github actions to v7 by @renovate[bot] in [#105](https://github.com/nicholas-fedor/actionlint-action/pull/105)
 - Update github actions to v4.36.2 by @renovate[bot] in [#102](https://github.com/nicholas-fedor/actionlint-action/pull/102)
 - Update github actions by @renovate[bot] in [#101](https://github.com/nicholas-fedor/actionlint-action/pull/101)
@@ -130,7 +136,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Compare Releases
 
-- [unreleased](https://github.com/nicholas-fedor/actionlint-action/compare/v1.0.3...HEAD)
+- [unreleased](https://github.com/nicholas-fedor/actionlint-action/compare/v1.0.4...HEAD)
+- [1.0.4](https://github.com/nicholas-fedor/actionlint-action/compare/v1.0.3...v1.0.4)
 - [1.0.3](https://github.com/nicholas-fedor/actionlint-action/compare/v1.0.2...v1.0.3)
 - [1.0.2](https://github.com/nicholas-fedor/actionlint-action/compare/v1.0.1...v1.0.2)
 - [1.0.1](https://github.com/nicholas-fedor/actionlint-action/compare/v1.0.0...v1.0.1)
