@@ -10,6 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Chores
 
+- Lock file maintenance by @renovate[bot] in [#116](https://github.com/nicholas-fedor/actionlint-action/pull/116)
+
+## [1.0.8] - 2026-06-14
+
+### Chores
+
 - Update dependency @types/node to v25.9.3 by @renovate[bot] in [#114](https://github.com/nicholas-fedor/actionlint-action/pull/114)
 
 ## [1.0.7] - 2026-06-13
@@ -155,7 +161,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Compare Releases
 
-- [unreleased](https://github.com/nicholas-fedor/actionlint-action/compare/v1.0.7...HEAD)
+- [unreleased](https://github.com/nicholas-fedor/actionlint-action/compare/v1.0.8...HEAD)
+- [1.0.8](https://github.com/nicholas-fedor/actionlint-action/compare/v1.0.7...v1.0.8)
 - [1.0.7](https://github.com/nicholas-fedor/actionlint-action/compare/v1.0.6...v1.0.7)
 - [1.0.6](https://github.com/nicholas-fedor/actionlint-action/compare/v1.0.5...v1.0.6)
 - [1.0.5](https://github.com/nicholas-fedor/actionlint-action/compare/v1.0.4...v1.0.5)
