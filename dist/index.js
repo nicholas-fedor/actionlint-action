@@ -6308,7 +6308,6 @@ var require_client_h1 = __commonJS((exports, module) => {
     finish() {
       assert(currentParser === null);
       assert(this.ptr != null);
-      assert(!this.paused);
       const { llhttp } = this;
       let ret;
       try {
@@ -7554,6 +7553,14 @@ var require_client_h2 = __commonJS((exports, module) => {
     closeStreamSession(this);
   }
   function onRequestStreamClose() {
+    const state = this[kRequestStreamState];
+    if (state) {
+      releaseRequestStream(this);
+      if (state.pendingEnd && !state.request.aborted && !state.request.completed) {
+        state.request.onResponseEnd(state.trailers || {});
+        state.finalizeRequest();
+      }
+    }
     this.off("data", onData);
     this.off("error", noop);
     closeStreamSession(this);
@@ -7925,12 +7932,10 @@ var require_client_h2 = __commonJS((exports, module) => {
     const state = stream[kRequestStreamState];
     const { request } = state;
     stream.off("end", onEnd);
-    releaseRequestStream(stream);
     if (state.responseReceived) {
       if (!request.aborted && !request.completed) {
-        request.onResponseEnd({});
+        state.pendingEnd = true;
       }
-      state.finalizeRequest();
     } else {
       state.abort(new InformationalError("HTTP/2: stream half-closed (remote)"), true);
     }
@@ -7939,14 +7944,12 @@ var require_client_h2 = __commonJS((exports, module) => {
     const stream = this;
     const state = stream[kRequestStreamState];
     stream.off("error", onError);
-    releaseRequestStream(stream);
     state.abort(err);
   }
   function onFrameError(type, code) {
     const stream = this;
     const state = stream[kRequestStreamState];
     stream.off("frameError", onFrameError);
-    releaseRequestStream(stream);
     state.abort(new InformationalError(`HTTP/2: "frameError" received - type ${type}, code ${code}`));
   }
   function onAborted() {
@@ -7955,7 +7958,7 @@ var require_client_h2 = __commonJS((exports, module) => {
   function onTimeout() {
     const stream = this;
     const state = stream[kRequestStreamState];
-    releaseRequestStream(stream);
+    stream.off("timeout", onTimeout);
     const err = state.responseReceived ? new BodyTimeoutError(`HTTP/2: "stream timeout after ${state.bodyTimeout}"`) : new HeadersTimeoutError(`HTTP/2: "headers timeout after ${state.headersTimeout}"`);
     state.abort(err);
   }
@@ -7964,12 +7967,11 @@ var require_client_h2 = __commonJS((exports, module) => {
     const state = stream[kRequestStreamState];
     const { request } = state;
     stream.off("trailers", onTrailers);
+    stream.off("data", onData);
     if (request.aborted || request.completed) {
       return;
     }
-    releaseRequestStream(stream);
-    request.onResponseEnd(trailers);
-    state.finalizeRequest();
+    state.trailers = trailers;
   }
   function writeBodyH2() {
     const stream = this;
@@ -8526,9 +8528,13 @@ var require_client = __commonJS((exports, module) => {
       });
     }
     if (err.code === "ERR_TLS_CERT_ALTNAME_INVALID") {
-      assert(client[kRunning] === 0);
+      const running = client[kQueue].splice(client[kRunningIdx], client[kRunning]);
+      client[kPendingIdx] = client[kRunningIdx];
+      for (let i = 0;i < running.length; i++) {
+        util.errorRequest(client, running[i], err);
+      }
       while (client[kPending] > 0 && client[kQueue][client[kPendingIdx]].servername === client[kServerName]) {
-        const request = client[kQueue][client[kPendingIdx]++];
+        const request = client[kQueue].splice(client[kPendingIdx], 1)[0];
         util.errorRequest(client, request, err);
       }
     } else {
@@ -14547,6 +14553,9 @@ var require_dns = __commonJS((exports, module) => {
     const instance = new DNSInstance(opts);
     return (dispatch) => {
       return function dnsInterceptor(origDispatchOpts, handler) {
+        if (origDispatchOpts.origin == null) {
+          return dispatch(origDispatchOpts, handler);
+        }
         const origin = origDispatchOpts.origin.constructor === URL ? origDispatchOpts.origin : new URL(origDispatchOpts.origin);
         if (isIP(origin.hostname) !== 0) {
           return dispatch(origDispatchOpts, handler);
@@ -24385,6 +24394,7 @@ var require_range = __commonJS((exports, module) => {
     return comp;
   };
   var isX = (id) => !id || id.toLowerCase() === "x" || id === "*";
+  var invalidXRangeOrder = (M, m, p) => isX(M) && !isX(m) || isX(m) && p && !isX(p);
   var replaceTildes = (comp, options) => {
     return comp.trim().split(/\s+/).map((c) => replaceTilde(c, options)).join(" ");
   };
@@ -24444,9 +24454,9 @@ var require_range = __commonJS((exports, module) => {
         debug2("no pr");
         if (M === "0") {
           if (m === "0") {
-            ret = `>=${M}.${m}.${p}${z} <${M}.${m}.${+p + 1}-0`;
+            ret = `>=${M}.${m}.${p} <${M}.${m}.${+p + 1}-0`;
           } else {
-            ret = `>=${M}.${m}.${p}${z} <${M}.${+m + 1}.0-0`;
+            ret = `>=${M}.${m}.${p} <${M}.${+m + 1}.0-0`;
           }
         } else {
           ret = `>=${M}.${m}.${p} <${+M + 1}.0.0-0`;
@@ -24465,6 +24475,9 @@ var require_range = __commonJS((exports, module) => {
     const r = options.loose ? re[t.XRANGELOOSE] : re[t.XRANGE];
     return comp.replace(r, (ret, gtlt, M, m, p, pr) => {
       debug2("xRange", comp, ret, gtlt, M, m, p, pr);
+      if (invalidXRangeOrder(M, m, p)) {
+        return comp;
+      }
       const xM = isX(M);
       const xm = xM || isX(m);
       const xp = xm || isX(p);
