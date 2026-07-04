@@ -10,6 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Chores
 
+- Update dependency @types/node to v26.1.0 by @renovate[bot] in [#135](https://github.com/nicholas-fedor/actionlint-action/pull/135)
+
+## [1.0.16] - 2026-07-02
+
+### Chores
+
 - Update github/codeql-action action to v4.36.3 by @renovate[bot] in [#133](https://github.com/nicholas-fedor/actionlint-action/pull/133)
 
 ## [1.0.15] - 2026-06-27
@@ -205,7 +211,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Compare Releases
 
-- [unreleased](https://github.com/nicholas-fedor/actionlint-action/compare/v1.0.15...HEAD)
+- [unreleased](https://github.com/nicholas-fedor/actionlint-action/compare/v1.0.16...HEAD)
+- [1.0.16](https://github.com/nicholas-fedor/actionlint-action/compare/v1.0.15...v1.0.16)
 - [1.0.15](https://github.com/nicholas-fedor/actionlint-action/compare/v1.0.14...v1.0.15)
 - [1.0.14](https://github.com/nicholas-fedor/actionlint-action/compare/v1.0.13...v1.0.14)
 - [1.0.13](https://github.com/nicholas-fedor/actionlint-action/compare/v1.0.12...v1.0.13)
