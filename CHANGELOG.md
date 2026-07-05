@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Chores
 
+- Update actions/checkout action to v7 by @renovate[bot] in [#119](https://github.com/nicholas-fedor/actionlint-action/pull/119)
+- Pin dependencies by @renovate[bot] in [#141](https://github.com/nicholas-fedor/actionlint-action/pull/141)
 - Restructure automated release pipeline by @nicholas-fedor in [#139](https://github.com/nicholas-fedor/actionlint-action/pull/139)
 
 ## [1.0.18] - 2026-07-04
