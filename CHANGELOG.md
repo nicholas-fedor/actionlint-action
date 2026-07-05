@@ -10,6 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Chores
 
+- Restructure automated release pipeline by @nicholas-fedor in [#139](https://github.com/nicholas-fedor/actionlint-action/pull/139)
+
+## [1.0.18] - 2026-07-04
+
+### Chores
+
 - Update dependency @semantic-release/github to v12.0.9 by @renovate[bot] in [#137](https://github.com/nicholas-fedor/actionlint-action/pull/137)
 
 ## [1.0.17] - 2026-07-04
@@ -217,7 +223,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Compare Releases
 
-- [unreleased](https://github.com/nicholas-fedor/actionlint-action/compare/v1.0.17...HEAD)
+- [unreleased](https://github.com/nicholas-fedor/actionlint-action/compare/v1.0.18...HEAD)
+- [1.0.18](https://github.com/nicholas-fedor/actionlint-action/compare/v1.0.17...v1.0.18)
 - [1.0.17](https://github.com/nicholas-fedor/actionlint-action/compare/v1.0.16...v1.0.17)
 - [1.0.16](https://github.com/nicholas-fedor/actionlint-action/compare/v1.0.15...v1.0.16)
 - [1.0.15](https://github.com/nicholas-fedor/actionlint-action/compare/v1.0.14...v1.0.15)
