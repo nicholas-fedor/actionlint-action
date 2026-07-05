@@ -28,6 +28,12 @@
     },
     "@semantic-release/release-notes-generator",
     ["@semantic-release/exec", { "prepareCmd": "bun run build" }],
-    "@semantic-release/github"
+    "@semantic-release/github",
+    [
+      "@semantic-release/git",
+      {
+        "assets": ["dist/index.js"]
+      }
+    ]
   ]
 }
