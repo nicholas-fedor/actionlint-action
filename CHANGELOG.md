@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Chores
 
+- Update dependency semantic-release to v25.0.7 by @renovate[bot] in [#158](https://github.com/nicholas-fedor/actionlint-action/pull/158)
 - Update actions/setup-node action to v7 by @renovate[bot] in [#155](https://github.com/nicholas-fedor/actionlint-action/pull/155)
 - Update actions/setup-node action to v6.5.0 by @renovate[bot] in [#154](https://github.com/nicholas-fedor/actionlint-action/pull/154)
 - Update dependency semantic-release to v25.0.6 by @renovate[bot] in [#152](https://github.com/nicholas-fedor/actionlint-action/pull/152)
