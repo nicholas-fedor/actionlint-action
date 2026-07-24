@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Chores
 
+- Update dependency @semantic-release/git to v11 by @renovate[bot] in [#170](https://github.com/nicholas-fedor/actionlint-action/pull/170)
 - Update ossf/scorecard-action action to v2.4.4 by @renovate[bot] in [#168](https://github.com/nicholas-fedor/actionlint-action/pull/168)
 - Update github/codeql-action action to v4.37.3 by @renovate[bot] in [#166](https://github.com/nicholas-fedor/actionlint-action/pull/166)
 - Update github/codeql-action action to v4.37.2 by @renovate[bot] in [#164](https://github.com/nicholas-fedor/actionlint-action/pull/164)
