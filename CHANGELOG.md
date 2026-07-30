@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Chores
 
+- Update node.js to 86722a5 by @renovate[bot] in [#176](https://github.com/nicholas-fedor/actionlint-action/pull/176)
+- Update dependency @semantic-release/git to v11.0.1 by @renovate[bot] in [#175](https://github.com/nicholas-fedor/actionlint-action/pull/175)
+- Rebuild dist/index.js by @github-actions[bot] in [#173](https://github.com/nicholas-fedor/actionlint-action/pull/173)
+- Lock file maintenance by @renovate[bot] in [#172](https://github.com/nicholas-fedor/actionlint-action/pull/172)
 - Update dependency @semantic-release/git to v11 by @renovate[bot] in [#170](https://github.com/nicholas-fedor/actionlint-action/pull/170)
 - Update ossf/scorecard-action action to v2.4.4 by @renovate[bot] in [#168](https://github.com/nicholas-fedor/actionlint-action/pull/168)
 - Update github/codeql-action action to v4.37.3 by @renovate[bot] in [#166](https://github.com/nicholas-fedor/actionlint-action/pull/166)
