@@ -3,7 +3,7 @@ version: 2.1
 executors:
   default:
     docker:
-      - image: cimg/node:lts@sha256:86722a5bb28633b65f586f9e42e6c82c3bf35ba4d5720fa88903de0da706b7c8
+      - image: cimg/node:lts@sha256:8966565f07189a67d64d6808a2b127f31dafae566508e3547f55640e1070bfad
     working_directory: ~/project
 
 commands:
