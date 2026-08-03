@@ -30153,7 +30153,7 @@ class RequestError extends Error {
 }
 
 // node_modules/@octokit/request/dist-bundle/index.js
-var VERSION2 = "10.0.11";
+var VERSION2 = "10.0.13";
 var defaults_default = {
   headers: {
     "user-agent": `octokit-request.js/${VERSION2} ${getUserAgent()}`
@@ -30275,7 +30275,7 @@ async function getResponseData(response) {
     } catch (err) {
       return text;
     }
-  } else if (mimetype.type.startsWith("text/") || mimetype.parameters.charset?.toLowerCase() === "utf-8") {
+  } else if (mimetype.type.startsWith("text/") || mimetype.parameters.charset?.toLowerCase() === "utf-8" && mimetype.type !== "application/octet-stream") {
     return response.text().catch(noop);
   } else {
     return response.arrayBuffer().catch(() => new ArrayBuffer(0));
@@ -30340,6 +30340,9 @@ var GraphqlResponseError = class extends Error {
       Error.captureStackTrace(this, this.constructor);
     }
   }
+  request;
+  headers;
+  response;
   name = "GraphqlResponseError";
   errors;
   data;
@@ -30459,7 +30462,7 @@ var createTokenAuth = function createTokenAuth2(token) {
 };
 
 // node_modules/@octokit/core/dist-src/version.js
-var VERSION4 = "7.0.6";
+var VERSION4 = "7.0.7";
 
 // node_modules/@octokit/core/dist-src/index.js
 var noop2 = () => {};
