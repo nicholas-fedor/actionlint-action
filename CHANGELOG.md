@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Chores
 
+- Update step-security/harden-runner action to v2.21.1 by @renovate[bot] in [#219](https://github.com/nicholas-fedor/actionlint-action/pull/219)
 - Update dependency @types/node to v26.4.0 by @renovate[bot] in [#217](https://github.com/nicholas-fedor/actionlint-action/pull/217)
 - Update dependency @types/node to v26.3.0 by @renovate[bot] in [#215](https://github.com/nicholas-fedor/actionlint-action/pull/215)
 - Update github/codeql-action action to v4.37.9 by @renovate[bot] in [#213](https://github.com/nicholas-fedor/actionlint-action/pull/213)
