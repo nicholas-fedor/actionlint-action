@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Chores
 
+- Update dependency @types/node to v26.6.1 by @renovate[bot] in [#253](https://github.com/nicholas-fedor/actionlint-action/pull/253)
+- Update orhun/git-cliff-action action to v4.9.1 by @renovate[bot] in [#254](https://github.com/nicholas-fedor/actionlint-action/pull/254)
 - Update dependency @types/node to v26.6.0 by @renovate[bot] in [#251](https://github.com/nicholas-fedor/actionlint-action/pull/251)
 - Update github/codeql-action action to v4.38.1 by @renovate[bot] in [#250](https://github.com/nicholas-fedor/actionlint-action/pull/250)
 - Update codecov/codecov-action action to v7.1.1 by @renovate[bot] in [#248](https://github.com/nicholas-fedor/actionlint-action/pull/248)
