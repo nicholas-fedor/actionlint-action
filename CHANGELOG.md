@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Chores
 
+- Lock file maintenance by @renovate[bot] in [#256](https://github.com/nicholas-fedor/actionlint-action/pull/256)
 - Update dependency @types/node to v26.6.1 by @renovate[bot] in [#253](https://github.com/nicholas-fedor/actionlint-action/pull/253)
 - Update orhun/git-cliff-action action to v4.9.1 by @renovate[bot] in [#254](https://github.com/nicholas-fedor/actionlint-action/pull/254)
 - Update dependency @types/node to v26.6.0 by @renovate[bot] in [#251](https://github.com/nicholas-fedor/actionlint-action/pull/251)
