@@ -33739,7 +33739,7 @@ function legacyRestEndpointMethods(octokit) {
 }
 legacyRestEndpointMethods.VERSION = VERSION5;
 
-// node_modules/@octokit/plugin-paginate-rest/dist-bundle/index.js
+// node_modules/@actions/github/node_modules/@octokit/plugin-paginate-rest/dist-bundle/index.js
 var VERSION6 = "0.0.0-development";
 function normalizePaginatedListResponse(response) {
   if (!response.data) {
