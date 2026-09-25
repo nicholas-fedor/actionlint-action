@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Chores
 
+- Update github/codeql-action action to v4.38.2 by @renovate[bot] in [#261](https://github.com/nicholas-fedor/actionlint-action/pull/261)
+- Update dependency @semantic-release/github to v12.0.10 by @renovate[bot] in [#260](https://github.com/nicholas-fedor/actionlint-action/pull/260)
 - Update dependency @types/node to v26.6.2 by @renovate[bot] in [#258](https://github.com/nicholas-fedor/actionlint-action/pull/258)
 - Lock file maintenance by @renovate[bot] in [#256](https://github.com/nicholas-fedor/actionlint-action/pull/256)
 - Update dependency @types/node to v26.6.1 by @renovate[bot] in [#253](https://github.com/nicholas-fedor/actionlint-action/pull/253)
