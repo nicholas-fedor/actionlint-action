@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Chores
 
+- Rebuild dist/index.js by @github-actions[bot] in [#262](https://github.com/nicholas-fedor/actionlint-action/pull/262)
 - Update github/codeql-action action to v4.38.2 by @renovate[bot] in [#261](https://github.com/nicholas-fedor/actionlint-action/pull/261)
 - Update dependency @semantic-release/github to v12.0.10 by @renovate[bot] in [#260](https://github.com/nicholas-fedor/actionlint-action/pull/260)
 - Update dependency @types/node to v26.6.2 by @renovate[bot] in [#258](https://github.com/nicholas-fedor/actionlint-action/pull/258)
@@ -84,6 +85,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update actions/checkout action to v7 by @renovate[bot] in [#119](https://github.com/nicholas-fedor/actionlint-action/pull/119)
 - Pin dependencies by @renovate[bot] in [#141](https://github.com/nicholas-fedor/actionlint-action/pull/141)
 - Restructure automated release pipeline by @nicholas-fedor in [#139](https://github.com/nicholas-fedor/actionlint-action/pull/139)
+
+### Fixed
+
+- Fix changelog automation workflows by @nicholas-fedor in [#264](https://github.com/nicholas-fedor/actionlint-action/pull/264)
 
 ## [1.0.18] - 2026-07-04
 
