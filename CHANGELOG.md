@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Chores
 
+- Update actions/setup-node action to v7.1.0 by @renovate[bot] in [#280](https://github.com/nicholas-fedor/actionlint-action/pull/280)
 - Update step-security/harden-runner action to v2.22.1 by @renovate[bot] in [#278](https://github.com/nicholas-fedor/actionlint-action/pull/278)
 - Update actions/upload-artifact action to v7.0.2 by @renovate[bot] in [#276](https://github.com/nicholas-fedor/actionlint-action/pull/276)
 - Update step-security/harden-runner action to v2.22.0 by @renovate[bot] in [#274](https://github.com/nicholas-fedor/actionlint-action/pull/274)
