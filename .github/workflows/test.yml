@@ -33,7 +33,7 @@ jobs:
         run: bun install
 
       - name: Audit Dependencies
-        run: bun audit
+        run: bun run audit
 
       - name: Run Tests
         run: bun test --coverage

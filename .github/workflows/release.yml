@@ -34,7 +34,7 @@ jobs:
         run: bun install
 
       - name: Audit Dependencies
-        run: bun audit
+        run: bun run audit
 
       - name: Setup Node.js
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0

@@ -41,7 +41,7 @@ jobs:
         run: bun install
 
       - name: Audit Dependencies
-        run: bun audit
+        run: bun run audit
 
       - name: Run Build
         run: bun run build
