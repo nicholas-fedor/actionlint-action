@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Skip pull request runs for changelog-only changes by @nicholas-fedor in [#291](https://github.com/nicholas-fedor/actionlint-action/pull/291)
+
+## [1.0.19] - 2026-10-09
+
 ### Chores
 
 - Remove codacy and circleci integrations by @nicholas-fedor in [#285](https://github.com/nicholas-fedor/actionlint-action/pull/285)
@@ -314,7 +320,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Compare Releases
 
-- [unreleased](https://github.com/nicholas-fedor/actionlint-action/compare/v1.0.18...HEAD)
+- [unreleased](https://github.com/nicholas-fedor/actionlint-action/compare/v1.0.19...HEAD)
+- [1.0.19](https://github.com/nicholas-fedor/actionlint-action/compare/v1.0.18...v1.0.19)
 - [1.0.18](https://github.com/nicholas-fedor/actionlint-action/compare/v1.0.17...v1.0.18)
 - [1.0.17](https://github.com/nicholas-fedor/actionlint-action/compare/v1.0.16...v1.0.17)
 - [1.0.16](https://github.com/nicholas-fedor/actionlint-action/compare/v1.0.15...v1.0.16)
