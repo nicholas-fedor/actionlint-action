@@ -7,9 +7,7 @@ Lint your GitHub Actions workflow files using the official [actionlint](https://
 
 <!-- markdownlint-restore -->
 [![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/nicholas-fedor/actionlint-action/badge)](https://scorecard.dev/viewer/?uri=github.com/nicholas-fedor/actionlint-action)
-[![CircleCI](https://dl.circleci.com/status-badge/img/gh/nicholas-fedor/actionlint-action/tree/main.svg?style=shield)](https://dl.circleci.com/status-badge/redirect/gh/nicholas-fedor/actionlint-action/tree/main)
 [![codecov](https://codecov.io/gh/nicholas-fedor/actionlint-action/graph/badge.svg?token=A60MVF46VX)](https://codecov.io/gh/nicholas-fedor/actionlint-action)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/31b33e083b1c48e0af7564d6fce1a78c)](https://app.codacy.com/gh/nicholas-fedor/actionlint-action/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 ![GitHub Tag](https://img.shields.io/github/v/tag/nicholas-fedor/actionlint-action)
 ![GitHub License](https://img.shields.io/github/license/nicholas-fedor/actionlint-action)
 </div>
