@@ -99,6 +99,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Resolve dependency audit failures by @nicholas-fedor in [#287](https://github.com/nicholas-fedor/actionlint-action/pull/287)
 - Fix changelog automation workflows by @nicholas-fedor in [#264](https://github.com/nicholas-fedor/actionlint-action/pull/264)
 
 ## [1.0.18] - 2026-07-04
