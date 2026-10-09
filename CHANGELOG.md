@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Chores
 
+- Remove codacy and circleci integrations by @nicholas-fedor in [#285](https://github.com/nicholas-fedor/actionlint-action/pull/285)
 - Update github/codeql-action action to v4.38.3 by @renovate[bot] in [#282](https://github.com/nicholas-fedor/actionlint-action/pull/282)
 - Update actions/setup-node action to v7.1.0 by @renovate[bot] in [#280](https://github.com/nicholas-fedor/actionlint-action/pull/280)
 - Update step-security/harden-runner action to v2.22.1 by @renovate[bot] in [#278](https://github.com/nicholas-fedor/actionlint-action/pull/278)
