@@ -37,6 +37,7 @@
     "semantic-release": "25.0.9"
   },
   "overrides": {
-    "undici": "^8.0.0"
+    "undici": "^8.0.0",
+    "conventional-changelog-writer": "^9.3.0"
   }
 }
