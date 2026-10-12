@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Skip pull request runs for changelog-only changes by @nicholas-fedor in [#291](https://github.com/nicholas-fedor/actionlint-action/pull/291)
 
+### Chores
+
+- Lock file maintenance by @renovate[bot] in [#293](https://github.com/nicholas-fedor/actionlint-action/pull/293)
+
 ## [1.0.19] - 2026-10-09
 
 ### Chores
