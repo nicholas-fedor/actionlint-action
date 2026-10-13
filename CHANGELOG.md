@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Chores
 
+- Update dependency @types/node to v26.6.5 by @renovate[bot] in [#297](https://github.com/nicholas-fedor/actionlint-action/pull/297)
 - Update ossf/scorecard-action action to v2.5.0 by @renovate[bot] in [#295](https://github.com/nicholas-fedor/actionlint-action/pull/295)
 - Lock file maintenance by @renovate[bot] in [#293](https://github.com/nicholas-fedor/actionlint-action/pull/293)
 
