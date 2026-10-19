@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Chores
 
+- Lock file maintenance by @renovate[bot] in [#303](https://github.com/nicholas-fedor/actionlint-action/pull/303)
 - Update github/codeql-action action to v4.39.0 by @renovate[bot] in [#301](https://github.com/nicholas-fedor/actionlint-action/pull/301)
 - Update dependency @types/bun to v1.4.3 by @renovate[bot] in [#299](https://github.com/nicholas-fedor/actionlint-action/pull/299)
 - Update dependency @types/node to v26.6.5 by @renovate[bot] in [#297](https://github.com/nicholas-fedor/actionlint-action/pull/297)
