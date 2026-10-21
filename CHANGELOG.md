@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Chores
 
+- Update github/codeql-action action to v4.39.1 by @renovate[bot] in [#308](https://github.com/nicholas-fedor/actionlint-action/pull/308)
 - Update step-security/harden-runner action to v2.22.2 by @renovate[bot] in [#306](https://github.com/nicholas-fedor/actionlint-action/pull/306)
 - Rebuild dist/index.js by @github-actions[bot] in [#304](https://github.com/nicholas-fedor/actionlint-action/pull/304)
 - Lock file maintenance by @renovate[bot] in [#303](https://github.com/nicholas-fedor/actionlint-action/pull/303)
